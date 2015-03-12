@@ -215,7 +215,7 @@ Class("Gauge.Dizmo", {
 
             //Tell the dizmo space that this dizmo can be docked to other dizmos. You can also supply a function
             //which gets the to be docked dizmo and has to return false or true if the dizmo can dock.
-            dizmo.canDock(false);
+            dizmo.canDock(true);
 
             //If a dizmo is docked to this dizmo, the function provided to the onDock function is being called and receives
             //the instance of the docked dizmo as a parameter.
