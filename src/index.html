@@ -22,15 +22,24 @@
     </head>
     <body>
         <div id="front">
+            <div id="display_unit">
+            </div>
             <div id="display_data">
             </div>
         </div>
         <div id="back">
             <div class="maximum_value">
-                <input id="maximum_value_inputfield" type="text" data-type="dizmo-input">
+                <label for="maximum_value_inputfield" class="max_label">Max. value</label>
+                <input id="maximum_value_inputfield" class="max_input" type="text"
+                       data-type="dizmo-input">
             </div>
             <div class="minimum_value">
-                <input id="minimum_value_inputfield" type="text" data-type="dizmo-input">
+                <label for="minimum_value_inputfield" class="min_label">Min. value</label>
+                <input id="minimum_value_inputfield" class="min_input" type="text" data-type="dizmo-input">
+            </div>
+            <div class="unit">
+                <label for="unit_inputfield" class="unit_label">Unit</label>
+                <input id="unit_inputfield" class="unit_input" type="text" data-type="dizmo-input" data-onback="true"/>
             </div>
             <div class="done-btn-wrapper">
                 <button class="done-btn" data-type="dizmo-button">Done</button>
