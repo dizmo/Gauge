@@ -16,27 +16,21 @@ Class("Gauge.Main", {
             is: 'rw',
             init: function() {
                 return Gauge.Dizmo.load('unit');
-            },
-
-            setterName: 'setUnit'
+            }
         },
 
         maxval: {
             is: 'rw',
             init: function() {
                 return Gauge.Dizmo.load('maxval');
-            },
-
-            setterName: 'setMaxval'
+            }
         },
 
         minval: {
             is: 'rw',
             init: function() {
                 return Gauge.Dizmo.load('minval');
-            },
-
-            setterName: 'setMinval'
+            }
         }
     },
 
@@ -68,18 +62,12 @@ Class("Gauge.Main", {
                     self.setMinval(minval);
                 }
 
-//                var displayedval = jQuery(this).attr('#.display_data');
-
-                self.setBackgroundColor(8.5);
-//                console.log((displayedval));
-
+                if (dizmo.publicStorage.getProperty('stdout') != null){
+                    self.setBackgroundColor(dizmo.publicStorage.getProperty('stdout'));
+                }
                 Gauge.Dizmo.showFront();
             });
 
-            jQuery(events).on('stdout.changed', function(e, value) {
-                document.getElementById("display_data").innerHTML = value;
-                self.setBackgroundColor(value);
-            });
 
         },
 
@@ -124,27 +112,35 @@ Class("Gauge.Main", {
 
         setBackgroundColor: function(value){
             var self = this;
+            var maxval = Gauge.Dizmo.load('maxval');
+            var minval = Gauge.Dizmo.load('minval');
 
             // set minimum and maximum color
             var min_color_rgb = Colors.hex2rgb('#447CA1');
             var max_color_rgb = Colors.hex2rgb('#CC2127');
 
-            //mix color for the temperature measured
-            var min_color_r = min_color_rgb.R;
-            var min_color_g = min_color_rgb.G;
-            var min_color_b = min_color_rgb.B;
+            if (value >= maxval) {
+                hex_color = '#ffCC2127';
+            }
+            else if (value <= minval) {
+                hex_color = '#ff447CA1';
+            }
+            else {
+                //mix color
+                var min_color_r = min_color_rgb.R;
+                var min_color_g = min_color_rgb.G;
+                var min_color_b = min_color_rgb.B;
 
-            var max_color_r = max_color_rgb.R;
-            var max_color_g = max_color_rgb.G;
-            var max_color_b = max_color_rgb.B;
+                var max_color_r = max_color_rgb.R;
+                var max_color_g = max_color_rgb.G;
+                var max_color_b = max_color_rgb.B;
 
-            var maxval = Gauge.Dizmo.load('maxval');
-            var minval = Gauge.Dizmo.load('minval');
+                var r = Math.round((max_color_r - min_color_r) * (value - minval) / (maxval - minval)) + min_color_r;
+                var g = Math.round((max_color_g - min_color_g) * (value - minval) / (maxval - minval)) + min_color_g;
+                var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
+                var hex_color = '#ff' + (Colors.rgb2hex(r, g, b).slice(1));
+            }
 
-            var r = Math.round((max_color_r - min_color_r) * (value - minval) / (maxval - minval)) + min_color_r;
-            var g = Math.round((max_color_g - min_color_g) * (value - minval) / (maxval - minval)) + min_color_g;
-            var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
-            var hex_color = '#ff' + (Colors.rgb2hex(r, g, b).slice(1));
             console.log(hex_color);
 
             dizmo.setAttribute('settings/framecolor', hex_color);
