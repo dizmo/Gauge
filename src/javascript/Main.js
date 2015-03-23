@@ -69,7 +69,6 @@ Class("Gauge.Main", {
             });
 
             dizmo.onDock(function(dockedDizmo) {
-                console.log('dizmo has been docked!');
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
                     var stdout = val;
                     self.syncValueText(stdout);
@@ -83,7 +82,7 @@ Class("Gauge.Main", {
             dizmo.onUndock(function(undockedDizmo) {
                 if (self.subscriptionId !== undefined) {
                     console.log(self.subscriptionId)
-                    dizmo.unsubscribeProperty(self.subscriptionId);
+                    dizmo.publicStorage.unsubscribeProperty(self.subscriptionId);
                 }
             });
         },
