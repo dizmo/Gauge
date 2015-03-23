@@ -70,17 +70,21 @@ Class("Gauge.Main", {
 
             dizmo.onDock(function(dockedDizmo) {
                 console.log('dizmo has been docked!');
-                subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
+                self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
                     var stdout = val;
-                    console.log(stdout);
                     self.syncValueText(stdout);
                     Gauge.Dizmo.publish(stdout);
                     self.setBackgroundColor(stdout);
-                });
 
+                });
+                console.log(self.subscriptionId)
             });
+
             dizmo.onUndock(function(undockedDizmo) {
-                dizmo.unsubscribeProperty(subscriptionId);
+                if (self.subscriptionId !== undefined) {
+                    console.log(self.subscriptionId)
+                    dizmo.unsubscribeProperty(self.subscriptionId);
+                }
             });
         },
 
@@ -186,7 +190,7 @@ Class("Gauge.Main", {
                 var hex_color = '#ff' + (Colors.rgb2hex(r, g, b).slice(1));
             }
 
-            console.log(hex_color);
+//            console.log(hex_color);
 
             dizmo.setAttribute('settings/framecolor', hex_color);
         }
