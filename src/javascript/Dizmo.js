@@ -181,12 +181,14 @@ Class("Gauge.Dizmo", {
 
             // Show back and front listeners
             dizmo.onShowBack(function() {
+                Gauge.Dizmo.setSize(260,300);
                 jQuery("#front").hide();
                 jQuery("#back").show();
                 jQuery(events).trigger('dizmo.turned', ['back']);
             });
 
             dizmo.onShowFront(function() {
+                Gauge.Dizmo.setSize(240,170);
                 jQuery("#back").hide();
                 jQuery("#front").show();
                 jQuery(events).trigger('dizmo.turned', ['front']);
@@ -244,7 +246,7 @@ Class("Gauge.Dizmo", {
             var self = this;
 
             // Allow the resizing of the dizmo
-            dizmo.setAttribute('settings/usercontrols/allowresize', true);
+            dizmo.setAttribute('settings/usercontrols/allowresize', false);
         }
     }
 });
