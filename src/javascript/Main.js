@@ -61,17 +61,16 @@ Class("Gauge.Main", {
                 if (minval != '') {
                     self.setMinval(minval);
                 }
-
+                // not the docked storage yet
                 if (dizmo.publicStorage.getProperty('stdout') != null){
                     self.setBackgroundColor(dizmo.publicStorage.getProperty('stdout'));
                 }
                 Gauge.Dizmo.showFront();
             });
 
-
             dizmo.onDock(function(dockedDizmo) {
                 console.log('dizmo has been docked!');
-                subscriptionId = dockedDizmo.publicStorage.subscribeTo( 'stdout', function(path, val, oldVal) {
+                subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
                     var stdout = val;
                     console.log(stdout);
                     self.syncValueText(stdout);
@@ -81,7 +80,7 @@ Class("Gauge.Main", {
 
             });
             dizmo.onUndock(function(undockedDizmo) {
-                dizmo.unsubscribeAttribute(subscriptionId);
+                dizmo.unsubscribeProperty(subscriptionId);
             });
         },
 
@@ -140,7 +139,7 @@ Class("Gauge.Main", {
             if (jQuery.isNumeric(value)) {
                 jQuery('#display_data').text(format(value, 2));
             } else {
-                jQuery('#display_data').text('?');
+                jQuery('#display_data').text('--.--');
             }
         },
 
@@ -154,7 +153,12 @@ Class("Gauge.Main", {
                 maxval = Gauge.Dizmo.load('maxval');
             }
 
-            var minval = Gauge.Dizmo.load('minval');
+            if (Gauge.Dizmo.load('minval') == null){
+                minval = 0;
+            }
+            else{
+                var minval = Gauge.Dizmo.load('minval');
+            }
 
             // set minimum and maximum color
             var min_color_rgb = Colors.hex2rgb('#447CA1');
