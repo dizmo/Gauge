@@ -69,6 +69,20 @@ Class("Gauge.Main", {
             });
 
 
+            dizmo.onDock(function(dockedDizmo) {
+                console.log('dizmo has been docked!');
+                subscriptionId = dockedDizmo.publicStorage.subscribeTo( 'stdout', function(path, val, oldVal) {
+                    var stdout = val;
+                    console.log(stdout);
+                    self.syncValueText(stdout);
+                    Gauge.Dizmo.publish(stdout);
+                    self.setBackgroundColor(stdout);
+                });
+
+            });
+            dizmo.onUndock(function(undockedDizmo) {
+                dizmo.unsubscribeAttribute(subscriptionId);
+            });
         },
 
         setUnit: function(unit) {
@@ -77,9 +91,9 @@ Class("Gauge.Main", {
             if (jQuery.type(unit) === 'string') {
                 self.unit = unit;
                 Gauge.Dizmo.save('unit', unit);
-                console.log(unit);
             }
             jQuery('#display_unit').text(unit);
+            jQuery('#unit_inputfield').text(Gauge.Dizmo.load('unit'));
         },
 
         setMaxval: function(maxval){
@@ -93,7 +107,7 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            console.log(Gauge.Dizmo.load('maxval'));
+            jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
         },
 
         setMinval: function(minval){
@@ -107,12 +121,39 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            console.log(Gauge.Dizmo.load('minval'));
+            jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
+        },
+
+        syncValueText: function (value) {
+            var format = function (float, ext) {
+                var string = float.toString();
+                var parts = string.split('.');
+                if (parts.length > 1) {
+                    return parts[0] + '.' + parts[1].slice(0, ext);
+                } else if (parts.length > 0) {
+                    return parts[0] + '.00';
+                } else {
+                    return '0.00';
+                }
+            };
+
+            if (jQuery.isNumeric(value)) {
+                jQuery('#display_data').text(format(value, 2));
+            } else {
+                jQuery('#display_data').text('?');
+            }
         },
 
         setBackgroundColor: function(value){
             var self = this;
-            var maxval = Gauge.Dizmo.load('maxval');
+            var maxval, minval
+            if (Gauge.Dizmo.load('maxval') == null){
+               maxval = 100;
+            }
+            else{
+                maxval = Gauge.Dizmo.load('maxval');
+            }
+
             var minval = Gauge.Dizmo.load('minval');
 
             // set minimum and maximum color
