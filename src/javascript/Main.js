@@ -83,6 +83,7 @@ Class("Gauge.Main", {
                 if (self.subscriptionId !== undefined) {
                     console.log(self.subscriptionId)
                     dizmo.publicStorage.unsubscribeProperty(self.subscriptionId);
+                    Gauge.Dizmo.unpublish('stdout');
                 }
             });
         },
