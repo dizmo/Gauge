@@ -17,6 +17,9 @@
         <script type="text/javascript" src="lib/dizmo/dizmoHelper.js"></script>
         <!-- End of utilities -->
 
+        <!-- D3.js -->
+        <script type="text/javascript" src="lib/d3/d3.js"></script>
+
         <!-- Your own stylesheet (do not remove!)-->
         <link rel="stylesheet" type="text/css" href="style/style.css">
     </head>
@@ -29,10 +32,20 @@
             </div>
         </div>
         <div id="back">
+            <div class="gauge_description">
+                Dock this dizmo to another <br> to display its output as a <br>numerical value.
+            </div>
+            <div class="gauge_select_wrapper">
+                <label for="gauge_select" class="gauge_label">Select the gauge type</label>
+                <select id="gauge_select" class="gauge_select"
+                        data-type="dizmo-selectbox" data-onback="true">
+                    <option value="number">Number Gauge</option>
+                    <option value="coming">Coming soon</option>
+                </select>
+            </div>
             <div class="maximum_value">
                 <label for="maximum_value_inputfield" class="max_label">Max. value</label>
-                <input id="maximum_value_inputfield" class="max_input" type="text"
-                       data-type="dizmo-input">
+                <input id="maximum_value_inputfield" class="max_input" type="text" data-type="dizmo-input">
             </div>
             <div class="minimum_value">
                 <label for="minimum_value_inputfield" class="min_label">Min. value</label>
@@ -40,10 +53,10 @@
             </div>
             <div class="unit">
                 <label for="unit_inputfield" class="unit_label">Unit</label>
-                <input id="unit_inputfield" class="unit_input" type="text" data-type="dizmo-input" data-onback="true"/>
+                <input id="unit_inputfield" class="unit_input" type="text" data-type="dizmo-input">
             </div>
             <div class="done-btn-wrapper">
-                <button class="done-btn" data-type="dizmo-button">Done</button>
+                <button class="done-btn" data-type="dizmo-button" data-onback="true">Done</button>
             </div>
         </div>
 

@@ -1,39 +1,94 @@
-.no-dizmo-drag {
-    -apple-dashboard-region: dashboard-region(control rectangle);
-}
-
 body {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #front {
-    width: 100%;
+  width: 100%;
 
-    .center {
-        margin-left: auto;
-        margin-right: auto;
-        width: 112px;
-        margin-top: 50px;
+  #display_unit {
+    margin-left: auto;
+    margin-right: auto;
+    width: 240px;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+  }
 
-        p {
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-        }
-    }
+  #display_data {
+    margin: 0;
+    width: 240px;
+    font-size: 100px;
+    font-weight: bold;
+    color: white;
+    //position: absolute; // i do not get text-align center
+    margin-left: auto;
+    margin-right: auto;
+    //display: table-cell;
+    text-align: center;
+  }
 }
 
 #back {
-    .done-btn-wrapper {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 100%;
-        text-align: center;
+  color: #ededed;
+  text-align: left;
+  padding-top: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  .gauge_description {
+    text-align: center;
+  }
+  .gauge_select_wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px; }
+  .gauge_select_wrapper label.gauge_label {
+    display: none; }
+  .gauge_select_wrapper select.gauge_select {
+    width: 240px ; }
+  .maximum_value {
+    height: 32px;
+    margin-bottom: 10px;
+  }
+  .maximum_value .max_label{
+    line-height: 32px;
+  }
+  .maximum_value .max_input{
+    float: right;
+    width: 110px;
+  }
+  .minimum_value {
+    height: 32px;
+    margin-bottom: 10px;
+  }
+  .minimum_value .min_label {
+    line-height: 32px;
+  }
+  .minimum_value .min_input{
+    float: right;
+    width: 110px;
+  }
+  .unit {
+    height: 32px;
+  }
+  .unit .unit_label {
+    line-height: 32px;
+    margin-bottom: 10px;
+  }
+  .unit .unit_input {
+    float: right;
+    width: 110px;
+  }
+  .done-btn-wrapper {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    text-align: center;
 
-        .done-btn {
-            margin-bottom: 20px;
-        }
+    .done-btn {
+      margin-bottom: 20px;
     }
+  }
 }
