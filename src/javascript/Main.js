@@ -83,7 +83,8 @@ Class("Gauge.Main", {
             dizmo.onUndock(function(undockedDizmo) {
                 if (self.subscriptionId !== undefined) {
                     dizmo.publicStorage.unsubscribeProperty(self.subscriptionId);
-                    Gauge.Dizmo.unpublish('stdout');
+                    Gauge.Dizmo.unpublish('stdout/value');
+                    Gauge.Dizmo.unpublish('stdout/hex_color');
                 }
             });
         },
