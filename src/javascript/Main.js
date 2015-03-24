@@ -150,7 +150,9 @@ Class("Gauge.Main", {
 
         setBackgroundColor: function(value){
             var self = this;
-            var maxval, minval
+            var maxval, minval;
+            var mincolor = '#ADC837';
+            var maxcolor = '#EF3B45';
             if (Gauge.Dizmo.load('maxval') == null){
                 maxval = 100;
             }
@@ -166,14 +168,14 @@ Class("Gauge.Main", {
             }
 
             // set minimum and maximum color
-            var min_color_rgb = Colors.hex2rgb('#447CA1');
-            var max_color_rgb = Colors.hex2rgb('#CC2127');
+            var min_color_rgb = Colors.hex2rgb(mincolor);
+            var max_color_rgb = Colors.hex2rgb(maxcolor);
 
             if (value >= maxval) {
-                hex_color = '#ffCC2127';
+                hex_color = '#FF' + (maxcolor.slice(1));
             }
             else if (value <= minval) {
-                hex_color = '#ff447CA1';
+                hex_color = '#FF' + (mincolor.slice(1));
             }
             else {
                 //mix color
@@ -188,7 +190,7 @@ Class("Gauge.Main", {
                 var r = Math.round((max_color_r - min_color_r) * (value - minval) / (maxval - minval)) + min_color_r;
                 var g = Math.round((max_color_g - min_color_g) * (value - minval) / (maxval - minval)) + min_color_g;
                 var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
-                var hex_color = '#ff' + (Colors.rgb2hex(r, g, b).slice(1));
+                var hex_color = '#FF' + (Colors.rgb2hex(r, g, b).slice(1));
             }
 
             dizmo.setAttribute('settings/framecolor', hex_color);
