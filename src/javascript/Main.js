@@ -68,6 +68,8 @@ Class("Gauge.Main", {
                 Gauge.Dizmo.showFront();
             });
 
+            // When docked, read the 'stdout' of the other docked dizmo, update the value,
+            // set the framecolor and write into the 'stdout' node of the own publicStorage.
             dizmo.onDock(function(dockedDizmo) {
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
                     var stdout = val;
@@ -76,12 +78,11 @@ Class("Gauge.Main", {
                     self.setBackgroundColor(stdout);
 
                 });
-                console.log(self.subscriptionId)
             });
 
+            // When ondocking, cancel the subcription and remove the the 'stdout' node of the own publicStorage
             dizmo.onUndock(function(undockedDizmo) {
                 if (self.subscriptionId !== undefined) {
-                    console.log(self.subscriptionId)
                     dizmo.publicStorage.unsubscribeProperty(self.subscriptionId);
                     Gauge.Dizmo.unpublish('stdout');
                 }
@@ -151,7 +152,7 @@ Class("Gauge.Main", {
             var self = this;
             var maxval, minval
             if (Gauge.Dizmo.load('maxval') == null){
-               maxval = 100;
+                maxval = 100;
             }
             else{
                 maxval = Gauge.Dizmo.load('maxval');
@@ -189,8 +190,6 @@ Class("Gauge.Main", {
                 var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
                 var hex_color = '#ff' + (Colors.rgb2hex(r, g, b).slice(1));
             }
-
-//            console.log(hex_color);
 
             dizmo.setAttribute('settings/framecolor', hex_color);
         }
