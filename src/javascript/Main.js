@@ -74,9 +74,8 @@ Class("Gauge.Main", {
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
                     var stdout = val;
                     self.syncValueText(stdout);
-                    Gauge.Dizmo.publish(stdout);
+                    Gauge.Dizmo.publish('stdout/value', stdout);
                     self.setBackgroundColor(stdout);
-
                 });
             });
 
@@ -192,6 +191,7 @@ Class("Gauge.Main", {
             }
 
             dizmo.setAttribute('settings/framecolor', hex_color);
+            Gauge.Dizmo.publish('stdout/hex_color', hex_color);
         }
     }
 });
