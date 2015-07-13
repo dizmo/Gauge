@@ -48,21 +48,21 @@ Class("Gauge.Main", {
 
             jQuery('.done-btn').on('click', function() {
                 var unitval = jQuery('.unit input').val();
-                if (unitval != '') {
+                if (unitval !== '') {
                     self.setUnit(unitval);
                 }
 
                 var maxval = jQuery('.maximum_value input').val();
-                if (maxval != '') {
+                if (maxval !== '') {
                     self.setMaxval(maxval);
                 }
 
                 var minval = jQuery('.minimum_value input').val();
-                if (minval != '') {
+                if (minval !== '') {
                     self.setMinval(minval);
                 }
                 // not the docked storage yet
-                if (dizmo.publicStorage.getProperty('stdout') != null){
+                if (dizmo.publicStorage.getProperty('stdout') !== null){
                     self.setBackgroundColor(dizmo.publicStorage.getProperty('stdout'));
                 }
                 Gauge.Dizmo.showFront();
@@ -102,7 +102,7 @@ Class("Gauge.Main", {
 
         setMaxval: function(maxval){
             var self = this;
-            var int_maxval = parseInt(maxval)
+            var int_maxval = parseInt(maxval);
 
             if (jQuery.type(int_maxval) === 'number') {
                 try {
@@ -116,7 +116,7 @@ Class("Gauge.Main", {
 
         setMinval: function(minval){
             var self = this;
-            var int_minval = parseInt(minval)
+            var int_minval = parseInt(minval);
 
             if (jQuery.type(int_minval) === 'number') {
                 try {
@@ -150,21 +150,21 @@ Class("Gauge.Main", {
 
         setBackgroundColor: function(value){
             var self = this;
-            var maxval, minval;
+            var maxval, minval, hex_color;
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
-            if (Gauge.Dizmo.load('maxval') == null){
+            if (Gauge.Dizmo.load('maxval') === null){
                 maxval = 100;
             }
             else{
                 maxval = Gauge.Dizmo.load('maxval');
             }
 
-            if (Gauge.Dizmo.load('minval') == null){
+            if (Gauge.Dizmo.load('minval') === null){
                 minval = 0;
             }
             else{
-                var minval = Gauge.Dizmo.load('minval');
+                minval = Gauge.Dizmo.load('minval');
             }
 
             // set minimum and maximum color
@@ -190,7 +190,7 @@ Class("Gauge.Main", {
                 var r = Math.round((max_color_r - min_color_r) * (value - minval) / (maxval - minval)) + min_color_r;
                 var g = Math.round((max_color_g - min_color_g) * (value - minval) / (maxval - minval)) + min_color_g;
                 var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
-                var hex_color = '#FF' + (Colors.rgb2hex(r, g, b).slice(1));
+                hex_color = '#FF' + (Colors.rgb2hex(r, g, b).slice(1));
             }
 
             dizmo.setAttribute('settings/framecolor', hex_color);
