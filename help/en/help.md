@@ -1,28 +1,22 @@
-# (Display Name of the dizmo)
+# Gauge
 
 **Table of contents**
 
-1. Summary
+1. Screenshots
 2. Description
-3. Examples
-4. Additional Information
+3. Additional information
 
-## Summary
+## Screenshots
 
- (A short summary of the purpose of the dizmo)
- 
+![Gauge displays the output of a docked dizmo as a numerical value.](/help/en/DockedGauge.png)
+![Converter settings](/help/en/ConverterBack.png)
+
 ## Description
 
-(A more in depth description of what can be done with the dizmo and how it should be used. This may include images as well)  
-![The dizmo Icon](./Icon.png =32x32)
+Dock Gauge to another dizmo to display its output as a numerical value. You can set a maximum and a mininum so that if the value of the docked dizmo approaches one of these thresholds, Gauge changes its color accordingly.
 
-## Examples
+## Additional information
 
-(Some examples explaining how the dizmo could be used)
-
-## Additional Information
-
-* Developer: (Developers Name)
-* Publisher: (Publisher's Name, remove if same as Developer)
-* Contact: (Who to contact for additional information or support)
-* Website: (URL of the dizmo providing additional information)
+Developer: dizmo AG
+Contact: support@dizmo.com
+Website: [www.dizmo.com](/)
