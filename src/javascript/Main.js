@@ -150,7 +150,7 @@ Class("Gauge.Main", {
 
         setBackgroundColor: function(value){
             var self = this;
-            var maxval, minval, hex_color;
+            var maxval, minval, frame_color
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
             if (Gauge.Dizmo.load('maxval') === null){
@@ -168,33 +168,35 @@ Class("Gauge.Main", {
             }
 
             // set minimum and maximum color
-            var min_color_rgb = Colors.hex2rgb(mincolor);
-            var max_color_rgb = Colors.hex2rgb(maxcolor);
 
             if (value >= maxval) {
-                hex_color = '#FF' + (maxcolor.slice(1));
+                frame_color = maxcolor;
             }
             else if (value <= minval) {
-                hex_color = '#FF' + (mincolor.slice(1));
+                frame_color = mincolor;
             }
             else {
                 //mix color
-                var min_color_r = min_color_rgb.R;
-                var min_color_g = min_color_rgb.G;
-                var min_color_b = min_color_rgb.B;
+                var min_color_r = Colors.hex2rgb(mincolor).R;
+                var min_color_g = Colors.hex2rgb(mincolor).G;
+                var min_color_b = Colors.hex2rgb(mincolor).B;
 
-                var max_color_r = max_color_rgb.R;
-                var max_color_g = max_color_rgb.G;
-                var max_color_b = max_color_rgb.B;
+                var max_color_r = Colors.hex2rgb(maxcolor).R;
+                var max_color_g = Colors.hex2rgb(maxcolor).G;
+                var max_color_b = Colors.hex2rgb(maxcolor).B;
 
                 var r = Math.round((max_color_r - min_color_r) * (value - minval) / (maxval - minval)) + min_color_r;
                 var g = Math.round((max_color_g - min_color_g) * (value - minval) / (maxval - minval)) + min_color_g;
                 var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
-                hex_color = '#FF' + (Colors.rgb2hex(r, g, b).slice(1));
+                frame_color = Colors.rgb2hex(r, g, b);
             }
 
-            dizmo.setAttribute('settings/framecolor', hex_color);
-            Gauge.Dizmo.publish('stdout/hex_color', hex_color);
+            try{
+                dizmo.setAttribute('settings/framecolor', frame_color);
+            } catch (err){
+                console.log(err)
+            }
+            Gauge.Dizmo.publish('stdout/framecolor', frame_color);
         }
     }
 });
