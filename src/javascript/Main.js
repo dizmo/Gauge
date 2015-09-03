@@ -75,6 +75,7 @@ Class("Gauge.Main", {
         initEvents: function() {
             var self = this;
 
+
             jQuery('.done-btn').on('click', function() {
                 var unitval = jQuery('.unit input').val();
                 if (unitval !== '') {
@@ -136,40 +137,20 @@ Class("Gauge.Main", {
                 }
             });
 
-            var meter = new RGraph.Meter({
-                id: 'cvs',
-                min: 0,
-                max: 100,
-                value: 75,
-                options: {
-                    anglesStart: RGraph.PI - 0.55,
-                    anglesEnd: RGraph.TWOPI + 0.5,
-                    centery: 150,
-                    textSize: 22,
-                    textColor: 'white',
-                    textValign: 'bottom',
-                    greenColor: '#0a0',
-                    segmentRadiusStart: 175,
-                    border: 0,
-                    tickmarksSmallNum: 0,
-                    tickmarksBigNum: 0,
-                    needleRadius: 250,
-                    needleColor: '#ddd',
-                    centerpinStroke: 'black',
-                    centerpinFill: '#ddd'
-                }
-            }).on('beforedraw', function (obj)
-                {
-                    RGraph.clear(obj.canvas, 'black');
-                }).draw();
-
-            meter.canvas.onclick = function (e)
-            {
-                var newvalue = meter.getValue(e);
-
-                meter.value = newvalue;
-                meter.grow();
+            var maxval, minval;
+            if (Gauge.Dizmo.load('maxval')!== null) {
+                maxval=0;
+            } else{
+                maxval =  Gauge.Dizmo.load('maxval');
             }
+
+            if (Gauge.Dizmo.load('minval')!== null) {
+                minval=0;
+            } else{
+                minval =  Gauge.Dizmo.load('minval');
+            }
+
+
         },
 
         setUnit: function(unit) {
@@ -240,23 +221,6 @@ Class("Gauge.Main", {
         },
 
         syncValueText: function (value) {
-            /*var format = function (float, ext) {
-             var string = float.toString();
-             var parts = string.split('.');
-             if (parts.length > 1) {
-             return parts[0] + '.' + parts[1].slice(0, ext);
-             } else if (parts.length > 0) {
-             return parts[0] + '.00';
-             } else {
-             return '0.00';
-             }
-             };
-
-             if (jQuery.isNumeric(value)) {
-             jQuery('#display_data').text(format(value, 2));
-             } else {
-             jQuery('#display_data').text('');
-             } */
             var nv=value;
             console.log(nv);
             jQuery('#display_data').text(nv);
@@ -290,7 +254,7 @@ Class("Gauge.Main", {
                 frame_color = mincolor;
             }
             else {
-                Gauge.ColorMixer.mix(mincolor, maxcolor, minval, maxval, value);
+                frame_color = Gauge.ColorMixer.mix(mincolor, maxcolor, minval, maxval, value);
             }
 
             try{

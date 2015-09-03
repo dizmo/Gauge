@@ -23,7 +23,7 @@ Class('Gauge.ColorMixer', {
                 var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
                 var frame_color = Colors.rgb2hex(r, g, b);
                 var indicator_color =  Gauge.ColorMixer.lightenColor(frame_color, 40);
-                return;
+                return frame_color;
             },
 
             lightenColor: function (color, amount){
