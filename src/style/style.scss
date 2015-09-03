@@ -133,7 +133,18 @@ body {
     float: right;
     width: 110px;
   }
-  .accuracy_select_wrapper {
+  .target_accuracy {
+    height: 32px;
+    margin-bottom: 10px;
+  }
+  .target_accuracy .target_accuracy_label {
+    line-height: 32px;
+  }
+  .target_accuracy .target_accuracy_input{
+    float: right;
+    width: 110px;
+  }
+/*  .accuracy_select_wrapper {
     margin-top: 5px;
     margin-bottom: 10px;
   }
@@ -146,7 +157,7 @@ body {
     float: right;
     width: 120px;
 
-  }
+  }*/
 
   .done-btn-wrapper {
     position: absolute;
