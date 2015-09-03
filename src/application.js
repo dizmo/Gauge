@@ -17,8 +17,12 @@ function showFront() {
 
 // Helper object to attach all the events to
 var events = {};
+var meter ;
 
 // As soon as the dom is loaded, and the dizmo is ready, instantiate the main class
 window.document.addEventListener('dizmoready', function() {
     new Gauge.Main();
+
 });
+
+

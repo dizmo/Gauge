@@ -1,6 +1,8 @@
 //= require Dizmo
 //= require ColorMixer
 
+var meter;
+
 Class("Gauge.Main", {
     has: {
         // This will be your wrapper around the dizmo API. It is instantiated
@@ -40,6 +42,12 @@ Class("Gauge.Main", {
             }
         },
         targetaccuracy: {
+            is: 'rw',
+            init: function() {
+                return Gauge.Dizmo.load('targetaccuracy');
+            }
+        } ,
+        meter: {
             is: 'rw',
             init: function() {
                 return Gauge.Dizmo.load('targetaccuracy');
@@ -137,19 +145,48 @@ Class("Gauge.Main", {
                 }
             });
 
-            var maxval, minval;
-            if (Gauge.Dizmo.load('maxval')!== null) {
-                maxval=0;
-            } else{
-                maxval =  Gauge.Dizmo.load('maxval');
-            }
+//            var maxval, minval;
+//            if (Gauge.Dizmo.load('maxval')!== null) {
+//                maxval=0;
+//            } else{
+//                maxval =  Gauge.Dizmo.load('maxval');
+//            }
+//
+//            if (Gauge.Dizmo.load('minval')!== null) {
+//                minval=0;
+//            } else{
+//                minval =  Gauge.Dizmo.load('minval');
+//            }
+            //var value =  dizmo.publicStorage.getProperty('stdout') ;
+            //value: -25,
 
-            if (Gauge.Dizmo.load('minval')!== null) {
-                minval=0;
-            } else{
-                minval =  Gauge.Dizmo.load('minval');
-            }
+            try{
+            meter.set({value:value}); }
+            catch(e){console.log(e);}
 
+            meter = new RGraph.Meter({
+                id: 'cvs',
+                min: 0,
+                max: 100,
+                value: 75,
+                options: {
+                    anglesStart: RGraph.PI + 0.5,
+                    anglesEnd: RGraph.TWOPI - 0.5,
+                    linewidthSegments: 15,
+                    textSize: 16,
+                    strokestyle: 'white',
+                    segmentRadiusStart: 155,
+                    border: 0,
+                    tickmarksSmallNum: 0,
+                    tickmarksBigNum: 0,
+                    adjustable: true,
+                    needleRadius: 135
+                }
+            }).on('beforedraw', function (obj)
+                {
+                    RGraph.clear(obj.canvas, 'white');
+
+                }).draw();
 
         },
 
