@@ -60,9 +60,11 @@ Class("Gauge.Main", {
             jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
 
             if (Gauge.Dizmo.load('targetval')=== undefined){
-                $('#target').hide();
+                $('.t_label').hide();
+                $('#target_textfield').hide();
             }else{
-                $('#target').show();
+                $('.t_label').show();
+                $('#target_textfield').show();
             }
 
             self.initEvents();
@@ -134,30 +136,40 @@ Class("Gauge.Main", {
                 }
             });
 
-            var opts = {
-                lines: 12, // The number of lines to draw
-                angle: 0, // The length of each line
-                lineWidth: 0.34, // The line thickness
-                pointer: {
-                    length: 30, // The radius of the inner circle
-                    strokeWidth: 0, // The rotation offset
-                    color: '#000000' // Fill color
-                },
-                percentColors: [[0.0, "#D6E49B" ], [0.50, "#FCD5A0"], [1.0, "#F79DA2"]], // !!!!
-                limitMax: 'true',   // If true, the pointer will not go past the end of the gauge
-                colorStart: '#D6E49B',   // Colors
-                colorStop: '#91A63B',    // just experiment with them
-                strokeColor: '#E0E0E0',   // to see which ones work best for you
-                generateGradient: true
-            };
+            var meter = new RGraph.Meter({
+                id: 'cvs',
+                min: 0,
+                max: 100,
+                value: 75,
+                options: {
+                    anglesStart: RGraph.PI - 0.55,
+                    anglesEnd: RGraph.TWOPI + 0.5,
+                    centery: 150,
+                    textSize: 22,
+                    textColor: 'white',
+                    textValign: 'bottom',
+                    greenColor: '#0a0',
+                    segmentRadiusStart: 175,
+                    border: 0,
+                    tickmarksSmallNum: 0,
+                    tickmarksBigNum: 0,
+                    needleRadius: 250,
+                    needleColor: '#ddd',
+                    centerpinStroke: 'black',
+                    centerpinFill: '#ddd'
+                }
+            }).on('beforedraw', function (obj)
+                {
+                    RGraph.clear(obj.canvas, 'black');
+                }).draw();
 
+            meter.canvas.onclick = function (e)
+            {
+                var newvalue = meter.getValue(e);
 
-            //console.log(opts);
-            var target = document.getElementById('chart'); // your canvas element
-            gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-            gauge.maxValue = 3000; // set max gauge value
-            gauge.animationSpeed = 32; // set animation speed (32 is default value)
-            gauge.set(3000); // set actual value
+                meter.value = newvalue;
+                meter.grow();
+            }
         },
 
         setUnit: function(unit) {

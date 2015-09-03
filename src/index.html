@@ -17,8 +17,13 @@
     <script type="text/javascript" src="lib/dizmo/dizmoHelper.js"></script>
     <!-- End of utilities -->
 
-    <!-- Chart.js -->
-      <script type="text/javascript" src="lib/gauge/gauge.min.js"></script>
+    <!-- Gauge.js
+      <script type="text/javascript" src="lib/gauge/gauge.min.js"></script> -->
+
+    <!-- Rgraph.js -->
+    <script type="text/javascript" src="lib/rgraph/RGraph.common.core.js"></script>
+    <script type="text/javascript" src="lib/rgraph/RGraph.common.dynamic.js"></script>
+    <script type="text/javascript" src="lib/rgraph/RGraph.meter.js"></script>
 
     <!-- Your own stylesheet (do not remove!)-->
     <link rel="stylesheet" type="text/css" href="style/style.css">
@@ -32,7 +37,7 @@
         <input id="target_textfield" class="t_textfield" type="text"
                data-type="dizmo-input" readonly="true" >
     </div>
-    <canvas id="chart" width="300" height="160"></canvas>
+    <canvas id="cvs" width="300" height="160"></canvas>
     <div id="display_unit">
     </div>
     <div id="display_minval">
