@@ -121,7 +121,7 @@ Class("Gauge.Main", {
                 self.syncValueText(stdout);
                 self.setBackgroundColor(stdout);
                 Gauge.Dizmo.publish('stdout', stdout);
-                meter.value = stdout
+
 
 
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
@@ -130,7 +130,7 @@ Class("Gauge.Main", {
                     self.syncValueText(stdout);
                     self.setBackgroundColor(stdout);
                     Gauge.Dizmo.publish('stdout', stdout);
-                    meter.value = stdout
+
                 });
             });
 
@@ -143,45 +143,7 @@ Class("Gauge.Main", {
                 }
             });
 
-//            var maxval, minval;
-//            if (Gauge.Dizmo.load('maxval')!== null) {
-//                maxval=0;
-//            } else{
-//                maxval =  Gauge.Dizmo.load('maxval');
-//            }
-//
-//            if (Gauge.Dizmo.load('minval')!== null) {
-//                minval=0;
-//            } else{
-//                minval =  Gauge.Dizmo.load('minval');
-//            }
-            //var value =  dizmo.publicStorage.getProperty('stdout') ;
-            //value: -25,
 
-
-            meter = new RGraph.Meter({
-                id: 'cvs',
-                min: 0,
-                max: 100,
-                value: 75,
-                options: {
-                    anglesStart: RGraph.PI + 0,
-                    anglesEnd: RGraph.TWOPI - 0,
-                    linewidthSegments: 15,
-                    textSize: 16,
-                    strokestyle: 'white',
-                    segmentRadiusStart: 155,
-                    border: 0,
-                    tickmarksSmallNum: 0,
-                    tickmarksBigNum: 0,
-                    adjustable: true,
-                    needleRadius: 135
-                }
-            }).on('beforedraw', function (obj)
-                {
-                    RGraph.clear(obj.canvas, 'grey');
-
-                }).draw();
 
         },
 
@@ -205,12 +167,8 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            //meter.max = int_maxval;
-            try{
-                meter.set({max:int_maxval});
-            }catch(e){
-                console.log(e);
-            }
+
+            jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
         },
 
         setMinval: function(minval){
@@ -224,11 +182,8 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            try{
-                meter.set({min:int_minval});
-            }catch(e){
-                console.log(e);
-            }
+
+            jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
         },
 
         setTargetval: function(targetval){
@@ -305,7 +260,8 @@ Class("Gauge.Main", {
             } catch (err){
                 console.log(err);
             }
-            //Gauge.Dizmo.publish('stdout/framecolor', frame_color);
+
+            Gauge.Dizmo.publish('stdout/framecolor', frame_color);
         },
 
         syncingTasks: function(stdout){
