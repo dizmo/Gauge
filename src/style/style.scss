@@ -13,12 +13,11 @@ body {
     margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
-    color: white;
+    color: #ffffff;
     text-align: center;
   }
 
   #display_data {
-    margin: 0;
     width: 240px;
     font-size: 100px;
     font-weight: bold;
@@ -29,7 +28,46 @@ body {
     //display: table-cell;
     text-align: center;
   }
+  #target {
+    height: 32px;
+    width: 300px;
+    margin-left: 10px;
+    margin-top: 4px;
+  }
+  /*  #target .tlabel {
+      line-height: 32px;
+      //float: left;
+      display: inline-block;
+      width: 190px;
+    }
+    #target #tvalue{
+      //float: right;
+      width: 90px;
+      background: #91A63B;
+      text-align: right;
+      display: inline-block;
+      line-height: 32px;
+      border: 1px solid white !important;
+      border-width: 1px;
+      border-style: solid;
+      border-color: white;
+      margin-right: 15px;*/
 }
+#target .t_label{
+  display: inline-block;
+  margin-right: 100px;
+  color: #ffffff !important;
+}
+
+#target #target_textfield{
+  background: #91A63B;
+  display: inline-block;
+  width: 90px;
+  border: 1px solid white;
+  text-align: right;
+  color: white !important;
+}
+  }
 
 #back {
   color: #ededed;
@@ -40,15 +78,19 @@ body {
   .gauge_description {
     text-align: center;
   }
-  .gauge_select_wrapper {
-    margin-top: 10px;
-    margin-bottom: 10px; }
-  .gauge_select_wrapper label.gauge_label {
-    display: none; }
-  .gauge_select_wrapper select.gauge_select {
-    width: 240px ; }
+  /*  .gauge_select_wrapper {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .gauge_select_wrapper label.gauge_label {
+      display: none; }
+    .gauge_select_wrapper select.gauge_select {
+      width: 230px ;
+      padding-bottom: 100px;
+    }*/
   .maximum_value {
     height: 32px;
+    margin-top: 10px;
     margin-bottom: 10px;
   }
   .maximum_value .max_label{
@@ -71,15 +113,41 @@ body {
   }
   .unit {
     height: 32px;
+    margin-bottom: 10px !important;
   }
   .unit .unit_label {
     line-height: 32px;
-    margin-bottom: 10px;
   }
   .unit .unit_input {
     float: right;
     width: 110px;
   }
+  .target_value {
+    height: 32px;
+    margin-bottom: 10px;
+  }
+  .target_value .target_label {
+    line-height: 32px;
+  }
+  .target_value .target_input{
+    float: right;
+    width: 110px;
+  }
+  .accuracy_select_wrapper {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  .accuracy_select_wrapper label.accuracy_label {
+    line-height: 32px;
+    margin-bottom: 10px;
+    margin-right: 45px;
+  }
+  .accuracy_select_wrapper select#accuracy_select {
+    float: right;
+    width: 120px;
+
+  }
+
   .done-btn-wrapper {
     position: absolute;
     bottom: 0px;

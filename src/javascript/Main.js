@@ -1,4 +1,5 @@
 //= require Dizmo
+//= require ColorMixer
 
 Class("Gauge.Main", {
     has: {
@@ -31,6 +32,18 @@ Class("Gauge.Main", {
             init: function() {
                 return Gauge.Dizmo.load('minval');
             }
+        },
+        targetval: {
+            is: 'rw',
+            init: function() {
+                return Gauge.Dizmo.load('targetval');
+            }
+        },
+        targetaccuracy: {
+            is: 'rw',
+            init: function() {
+                return Gauge.Dizmo.load('targetaccuracy');
+            }
         }
     },
 
@@ -61,22 +74,36 @@ Class("Gauge.Main", {
                 if (minval !== '') {
                     self.setMinval(minval);
                 }
-                // not the docked storage yet
-                if (dizmo.publicStorage.getProperty('stdout') !== null){
-                    self.setBackgroundColor(dizmo.publicStorage.getProperty('stdout'));
+                var targetval = jQuery('.target_value input').val();
+                if (targetval !== '') {
+                    self.setTargetval(targetval);
                 }
+
+                var targetaccuracy = DizmoElements('.accuracy-select').val();
+                if (targetaccuracy == 0)    {
+                    console.log(targetaccuracy)
+                } else{
+                    self.setAccuracy(targetaccuracy);
+                }
+
+                // not the docked storage yet
+                /*if (dizmo.publicStorage.getProperty('stdout') !== null){
+                 self.setBackgroundColor(dizmo.publicStorage.getProperty('stdout'));
+                 }*/
                 Gauge.Dizmo.showFront();
             });
 
             // When docked, read the 'stdout' of the other docked dizmo, update the value,
             // set the framecolor and write into the 'stdout' node of the own publicStorage.
             dizmo.onDock(function(dockedDizmo) {
+                var stdout = dockedDizmo.publicStorage.getProperty('stdout');
+                //console.log(stdout);
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
-                    var stdout = val;
-                    self.syncValueText(stdout);
-                    Gauge.Dizmo.publish('stdout/value', stdout);
-                    self.setBackgroundColor(stdout);
+                    stdout = val;
                 });
+                self.syncValueText(stdout);
+                Gauge.Dizmo.publish('stdout/value', stdout);
+                self.setBackgroundColor(stdout);
             });
 
             // When ondocking, cancel the subcription and remove the the 'stdout' node of the own publicStorage
@@ -87,6 +114,8 @@ Class("Gauge.Main", {
                     Gauge.Dizmo.unpublish('stdout/hex_color');
                 }
             });
+
+
         },
 
         setUnit: function(unit) {
@@ -128,39 +157,75 @@ Class("Gauge.Main", {
             jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
         },
 
-        syncValueText: function (value) {
-            var format = function (float, ext) {
-                var string = float.toString();
-                var parts = string.split('.');
-                if (parts.length > 1) {
-                    return parts[0] + '.' + parts[1].slice(0, ext);
-                } else if (parts.length > 0) {
-                    return parts[0] + '.00';
-                } else {
-                    return '0.00';
-                }
-            };
+        setTargetval: function(targetval){
+            var self = this;
+            var int_targetval = parseInt(targetval);
 
-            if (jQuery.isNumeric(value)) {
-                jQuery('#display_data').text(format(value, 2));
-            } else {
-                jQuery('#display_data').text('--.--');
+            if (jQuery.type(int_targetval) === 'number') {
+                try {
+                    Gauge.Dizmo.save('targetval', int_targetval);
+                } catch(ex) {
+                    console.error (ex);
+                }
             }
+            jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
+            jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
+            //jQuery('#tvalue').text(Gauge.Dizmo.load('targetval'));
+            //show target value in the donut
+        },
+
+        setAccuracy: function(targetaccuracy){
+            var self = this;
+
+            var int_targetaccuracy = parseInt(targetaccuracy);
+
+            if (jQuery.type(int_targetaccuracy) === 'number') {
+                try {
+                    Gauge.Dizmo.save('targetaccuracy', int_targetaccuracy);
+                } catch(ex) {
+                    console.error (ex);
+                }
+            }
+            //jQuery('#display_data').text(int_targetaccuracy);
+            //calculate targetvalue + and minus (100-targetaccuracy)
+        },
+
+        syncValueText: function (value) {
+            /*var format = function (float, ext) {
+             var string = float.toString();
+             var parts = string.split('.');
+             if (parts.length > 1) {
+             return parts[0] + '.' + parts[1].slice(0, ext);
+             } else if (parts.length > 0) {
+             return parts[0] + '.00';
+             } else {
+             return '0.00';
+             }
+             };
+
+             if (jQuery.isNumeric(value)) {
+             jQuery('#display_data').text(format(value, 2));
+             } else {
+             jQuery('#display_data').text('');
+             } */
+            var nv=value;
+            console.log(nv);
+            jQuery('#display_data').text(nv);
         },
 
         setBackgroundColor: function(value){
             var self = this;
-            var maxval, minval, frame_color
+            var maxval, minval, frame_color, lighter_color;
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
-            if (Gauge.Dizmo.load('maxval') === null){
+            if (Gauge.Dizmo.load('maxval') === undefined){
                 maxval = 100;
             }
             else{
                 maxval = Gauge.Dizmo.load('maxval');
             }
 
-            if (Gauge.Dizmo.load('minval') === null){
+            if (Gauge.Dizmo.load('minval') === undefined){
                 minval = 0;
             }
             else{
@@ -176,19 +241,7 @@ Class("Gauge.Main", {
                 frame_color = mincolor;
             }
             else {
-                //mix color
-                var min_color_r = Colors.hex2rgb(mincolor).R;
-                var min_color_g = Colors.hex2rgb(mincolor).G;
-                var min_color_b = Colors.hex2rgb(mincolor).B;
-
-                var max_color_r = Colors.hex2rgb(maxcolor).R;
-                var max_color_g = Colors.hex2rgb(maxcolor).G;
-                var max_color_b = Colors.hex2rgb(maxcolor).B;
-
-                var r = Math.round((max_color_r - min_color_r) * (value - minval) / (maxval - minval)) + min_color_r;
-                var g = Math.round((max_color_g - min_color_g) * (value - minval) / (maxval - minval)) + min_color_g;
-                var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
-                frame_color = Colors.rgb2hex(r, g, b);
+                mix(min_color, maxcolor, minval, maxval, value);
             }
 
             try{
