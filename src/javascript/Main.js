@@ -46,12 +46,6 @@ Class("Gauge.Main", {
             init: function() {
                 return Gauge.Dizmo.load('targetaccuracy');
             }
-        } ,
-        meter: {
-            is: 'rw',
-            init: function() {
-                return Gauge.Dizmo.load('targetaccuracy');
-            }
         }
     },
 
@@ -127,12 +121,16 @@ Class("Gauge.Main", {
                 self.syncValueText(stdout);
                 self.setBackgroundColor(stdout);
                 Gauge.Dizmo.publish('stdout', stdout);
+                meter.value = stdout
+
+
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
                     var stdout = val;
                     //self.syncingTasks(stdout);
                     self.syncValueText(stdout);
                     self.setBackgroundColor(stdout);
                     Gauge.Dizmo.publish('stdout', stdout);
+                    meter.value = stdout
                 });
             });
 
@@ -160,9 +158,6 @@ Class("Gauge.Main", {
             //var value =  dizmo.publicStorage.getProperty('stdout') ;
             //value: -25,
 
-            try{
-            meter.set({value:value}); }
-            catch(e){console.log(e);}
 
             meter = new RGraph.Meter({
                 id: 'cvs',
@@ -170,8 +165,8 @@ Class("Gauge.Main", {
                 max: 100,
                 value: 75,
                 options: {
-                    anglesStart: RGraph.PI + 0.5,
-                    anglesEnd: RGraph.TWOPI - 0.5,
+                    anglesStart: RGraph.PI + 0,
+                    anglesEnd: RGraph.TWOPI - 0,
                     linewidthSegments: 15,
                     textSize: 16,
                     strokestyle: 'white',
@@ -184,7 +179,7 @@ Class("Gauge.Main", {
                 }
             }).on('beforedraw', function (obj)
                 {
-                    RGraph.clear(obj.canvas, 'white');
+                    RGraph.clear(obj.canvas, 'grey');
 
                 }).draw();
 
@@ -210,6 +205,12 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
+            //meter.max = int_maxval;
+            try{
+                meter.set({max:int_maxval});
+            }catch(e){
+                console.log(e);
+            }
         },
 
         setMinval: function(minval){
@@ -222,6 +223,11 @@ Class("Gauge.Main", {
                 } catch(ex) {
                     console.error (ex);
                 }
+            }
+            try{
+                meter.set({min:int_minval});
+            }catch(e){
+                console.log(e);
             }
         },
 
