@@ -52,22 +52,22 @@ body {
       border-style: solid;
       border-color: white;
       margin-right: 15px;*/
-}
-#target .t_label{
-  display: inline-block;
-  margin-right: 100px;
-  color: #ffffff !important;
-}
-
-#target #target_textfield{
-  background: #91A63B;
-  display: inline-block;
-  width: 90px;
-  border: 1px solid white;
-  text-align: right;
-  color: white !important;
-}
+  #target .t_label{
+    display: inline-block;
+    margin-right: 100px;
+    color: #ffffff !important;
   }
+
+  #target #target_textfield{
+    background: #91A63B;
+    display: inline-block;
+    width: 90px;
+    border: 1px solid white;
+    text-align: right;
+    color: white !important;
+  }
+
+}
 
 #back {
   color: #ededed;

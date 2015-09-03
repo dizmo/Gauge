@@ -181,14 +181,15 @@ Class("Gauge.Dizmo", {
 
             // Show back and front listeners
             dizmo.onShowBack(function() {
-                Gauge.Dizmo.setSize(260,300);
+                Gauge.Dizmo.setSize(320,330);
                 jQuery("#front").hide();
                 jQuery("#back").show();
                 jQuery(events).trigger('dizmo.turned', ['back']);
+                DizmoElements('.accuracy-select').dselectbox('update');
             });
 
             dizmo.onShowFront(function() {
-                Gauge.Dizmo.setSize(240,170);
+                Gauge.Dizmo.setSize(320,330);
                 jQuery("#back").hide();
                 jQuery("#front").show();
                 jQuery(events).trigger('dizmo.turned', ['front']);

@@ -9,7 +9,7 @@
 Class('Gauge.ColorMixer', {
     my: {
         methods: {
-            mix: function (min_color, maxcolor, minval, maxval, value) {
+            mix: function (mincolor, maxcolor, minval, maxval, value) {
                 var min_color_r = Colors.hex2rgb(mincolor).R;
                 var min_color_g = Colors.hex2rgb(mincolor).G;
                 var min_color_b = Colors.hex2rgb(mincolor).B;
@@ -22,7 +22,7 @@ Class('Gauge.ColorMixer', {
                 var g = Math.round((max_color_g - min_color_g) * (value - minval) / (maxval - minval)) + min_color_g;
                 var b = Math.round((max_color_b - min_color_b) * (value - minval) / (maxval - minval)) + min_color_b;
                 var frame_color = Colors.rgb2hex(r, g, b);
-                var indicator_color =  lightenColor(frame_color, 40);
+                var indicator_color =  Gauge.ColorMixer.lightenColor(frame_color, 40);
                 return;
             },
 

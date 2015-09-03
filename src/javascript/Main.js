@@ -80,8 +80,8 @@ Class("Gauge.Main", {
                 }
 
                 var targetaccuracy = DizmoElements('.accuracy-select').val();
-                if (targetaccuracy == 0)    {
-                    console.log(targetaccuracy)
+                if (targetaccuracy === 0)    {
+                    console.log(targetaccuracy);
                 } else{
                     self.setAccuracy(targetaccuracy);
                 }
@@ -98,20 +98,25 @@ Class("Gauge.Main", {
             dizmo.onDock(function(dockedDizmo) {
                 var stdout = dockedDizmo.publicStorage.getProperty('stdout');
                 //console.log(stdout);
+                //self.syncingTasks(stdout);
+                self.syncValueText(stdout);
+                Gauge.Dizmo.publish('stdout', stdout);
+                self.setBackgroundColor(stdout);
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
                     stdout = val;
+                    //self.syncingTasks(stdout);
+                    self.syncValueText(stdout);
+                    Gauge.Dizmo.publish('stdout', stdout);
+                    self.setBackgroundColor(stdout);
                 });
-                self.syncValueText(stdout);
-                Gauge.Dizmo.publish('stdout/value', stdout);
-                self.setBackgroundColor(stdout);
             });
 
             // When ondocking, cancel the subcription and remove the the 'stdout' node of the own publicStorage
             dizmo.onUndock(function(undockedDizmo) {
                 if (self.subscriptionId !== undefined) {
                     dizmo.publicStorage.unsubscribeProperty(self.subscriptionId);
-                    Gauge.Dizmo.unpublish('stdout/value');
-                    Gauge.Dizmo.unpublish('stdout/hex_color');
+                    Gauge.Dizmo.unpublish('stdout');
+                    //Gauge.Dizmo.unpublish('stdout/frame_color');
                 }
             });
 
@@ -241,15 +246,22 @@ Class("Gauge.Main", {
                 frame_color = mincolor;
             }
             else {
-                mix(min_color, maxcolor, minval, maxval, value);
+                Gauge.ColorMixer.mix(mincolor, maxcolor, minval, maxval, value);
             }
 
             try{
                 dizmo.setAttribute('settings/framecolor', frame_color);
             } catch (err){
-                console.log(err)
+                console.log(err);
             }
-            Gauge.Dizmo.publish('stdout/framecolor', frame_color);
+            //Gauge.Dizmo.publish('stdout/framecolor', frame_color);
+        },
+
+        syncingTasks: function(stdout){
+            var self = this;
+            self.syncValueText(stdout);
+            Gauge.Dizmo.publish('stdout', stdout);
+            self.setBackgroundColor(stdout);
         }
     }
 });
