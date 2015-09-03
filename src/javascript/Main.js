@@ -50,6 +50,20 @@ Class("Gauge.Main", {
     after: {
         initialize: function() {
             var self = this;
+            jQuery('#unit_inputfield').val(Gauge.Dizmo.load('unit'));
+            jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
+            jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
+            jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
+            jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
+            jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
+            jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
+            jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
+
+            if (Gauge.Dizmo.load('targetval')=== undefined){
+                $('#target').hide();
+            }else{
+                $('#target').show();
+            }
 
             self.initEvents();
         }
@@ -100,14 +114,14 @@ Class("Gauge.Main", {
                 //console.log(stdout);
                 //self.syncingTasks(stdout);
                 self.syncValueText(stdout);
-                Gauge.Dizmo.publish('stdout', stdout);
                 self.setBackgroundColor(stdout);
+                Gauge.Dizmo.publish('stdout', stdout);
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
-                    stdout = val;
+                    var stdout = val;
                     //self.syncingTasks(stdout);
                     self.syncValueText(stdout);
-                    Gauge.Dizmo.publish('stdout', stdout);
                     self.setBackgroundColor(stdout);
+                    Gauge.Dizmo.publish('stdout', stdout);
                 });
             });
 
@@ -120,7 +134,30 @@ Class("Gauge.Main", {
                 }
             });
 
+            var opts = {
+                lines: 12, // The number of lines to draw
+                angle: 0, // The length of each line
+                lineWidth: 0.34, // The line thickness
+                pointer: {
+                    length: 30, // The radius of the inner circle
+                    strokeWidth: 0, // The rotation offset
+                    color: '#000000' // Fill color
+                },
+                percentColors: [[0.0, "#D6E49B" ], [0.50, "#FCD5A0"], [1.0, "#F79DA2"]], // !!!!
+                limitMax: 'true',   // If true, the pointer will not go past the end of the gauge
+                colorStart: '#D6E49B',   // Colors
+                colorStop: '#91A63B',    // just experiment with them
+                strokeColor: '#E0E0E0',   // to see which ones work best for you
+                generateGradient: true
+            };
 
+
+            //console.log(opts);
+            var target = document.getElementById('chart'); // your canvas element
+            gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+            gauge.maxValue = 3000; // set max gauge value
+            gauge.animationSpeed = 32; // set animation speed (32 is default value)
+            gauge.set(3000); // set actual value
         },
 
         setUnit: function(unit) {
@@ -130,8 +167,6 @@ Class("Gauge.Main", {
                 self.unit = unit;
                 Gauge.Dizmo.save('unit', unit);
             }
-            jQuery('#display_unit').text(unit);
-            jQuery('#unit_inputfield').text(Gauge.Dizmo.load('unit'));
         },
 
         setMaxval: function(maxval){
@@ -145,7 +180,6 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
         },
 
         setMinval: function(minval){
@@ -159,7 +193,6 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
         },
 
         setTargetval: function(targetval){
@@ -173,8 +206,7 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
-            jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
+
             //jQuery('#tvalue').text(Gauge.Dizmo.load('targetval'));
             //show target value in the donut
         },
@@ -260,8 +292,9 @@ Class("Gauge.Main", {
         syncingTasks: function(stdout){
             var self = this;
             self.syncValueText(stdout);
-            Gauge.Dizmo.publish('stdout', stdout);
+
             self.setBackgroundColor(stdout);
+            Gauge.Dizmo.publish('stdout', stdout);
         }
     }
 });
