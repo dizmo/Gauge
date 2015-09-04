@@ -31,13 +31,13 @@ window.document.addEventListener('dizmoready', function() {
 var ex1 = function( s ) {
     s.setup = function() {
         s.createCanvas(300, 160);
-    }
+    };
 
     s.draw = function() {
         s.ellipse(160, 160, 80, 80);
         star(50, 50);
 
-    }
+    };
     function star(x, y) {
         // Modified p5 code to create
         // a 5-pointed star
@@ -59,7 +59,7 @@ var ex1 = function( s ) {
         s.endShape(s.CLOSE);
     }
 
-}
+};
 
 var one = new p5(ex1, 'ex1');
 
