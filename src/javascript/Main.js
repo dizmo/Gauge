@@ -180,6 +180,7 @@ Class("Gauge.Main", {
                 self.unit = unit;
                 Gauge.Dizmo.save('unit', unit);
             }
+            jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
         },
 
         setMaxval: function(maxval){
@@ -224,7 +225,8 @@ Class("Gauge.Main", {
                 }
             }
 
-            //jQuery('#tvalue').text(Gauge.Dizmo.load('targetval'));
+
+            jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
             //show target value in the donut
         },
 
