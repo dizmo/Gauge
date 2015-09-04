@@ -253,25 +253,12 @@ Class("Gauge.Main", {
 
         setDynamicBackgroundColor: function(value){
             var self = this;
-            var maxval, minval, frame_color, indicator_color, bar_color;
+            var frame_color, indicator_color, bar_color;
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
 
-
-
-            if (Gauge.Dizmo.load('maxval') === undefined){
-                maxval = 100;
-            }
-            else{
-                maxval = Gauge.Dizmo.load('maxval');
-            }
-
-            if (Gauge.Dizmo.load('minval') === undefined){
-                minval = 0;
-            }
-            else{
-                minval = Gauge.Dizmo.load('minval');
-            }
+            var maxval = setMax();
+            var minval = setMin();
 
             // set minimum and maximum color
 
@@ -296,6 +283,41 @@ Class("Gauge.Main", {
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
             Gauge.Dizmo.publish('stdout/indicatorcolor', indicator_color);
             Gauge.Dizmo.publish('stdout/barcolor', bar_color);
+        },
+
+        setTargetAccuracyBackgroundColor: function(stdout){
+            var self = this;
+            var maxval, minval, frame_color, indicator_color, bar_color;
+            var mincolor = '#ADC837';
+            var maxcolor = '#EF3B45';
+        },
+
+        setMax: function(){
+            var self = this;
+            var maxval
+
+            if (Gauge.Dizmo.load('maxval') === undefined){
+                maxval = 100;
+                return maxval;
+            }
+            else{
+                maxval = Gauge.Dizmo.load('maxval');
+                return maxval;
+            }
+        },
+
+        setMin: function(){
+            var self = this;
+            var minval
+
+            if (Gauge.Dizmo.load('minval') === undefined){
+                minval = 100;
+                return minval;
+            }
+            else{
+                minval = Gauge.Dizmo.load('minval');
+                return minval;
+            }
         },
 
         syncingTasks: function(stdout){
