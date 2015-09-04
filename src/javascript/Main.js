@@ -83,26 +83,37 @@ Class("Gauge.Main", {
                 var unitval = jQuery('.unit input').val();
                 if (unitval !== '') {
                     self.setUnit(unitval);
+                } else {
+                    dizmo.privateStorage.deleteProperty("unit");
                 }
 
                 var maxval = jQuery('.maximum_value input').val();
                 if (maxval !== '') {
                     self.setMaxval(maxval);
+                }  else {
+                    dizmo.privateStorage.deleteProperty("maxval");
                 }
 
                 var minval = jQuery('.minimum_value input').val();
                 if (minval !== '') {
                     self.setMinval(minval);
+                }  else {
+                    dizmo.privateStorage.deleteProperty("minval");
                 }
+
                 var targetval = jQuery('.target_value input').val();
                 if (targetval !== '') {
                     self.setTargetval(targetval);
+                }  else {
+                    dizmo.privateStorage.deleteProperty("targetval");
                 }
 
                 //var targetaccuracy = DizmoElements('.accuracy-select').val();
                 var targetaccuracy = jQuery('.target_accuracy input').val();
                 if (targetaccuracy !== '') {
                     self.setAccuracy(targetaccuracy);
+                }else {
+                    dizmo.privateStorage.deleteProperty("targetaccuracy");
                 }
 
 
@@ -240,7 +251,7 @@ Class("Gauge.Main", {
 
         setDynamicBackgroundColor: function(value){
             var self = this;
-            var maxval, minval, frame_color, indicator_color;
+            var maxval, minval, frame_color, indicator_color, bar_color;
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
 
@@ -271,6 +282,7 @@ Class("Gauge.Main", {
             else {
                 frame_color = Gauge.ColorMixer.mix(mincolor, maxcolor, minval, maxval, value);
                 indicator_color =  Gauge.ColorMixer.lightenColor(frame_color, 40);
+                bar_color =  Gauge.ColorMixer.lightenColor(frame_color, -40);
             }
 
             try{
@@ -281,6 +293,7 @@ Class("Gauge.Main", {
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
             Gauge.Dizmo.publish('stdout/indicatorcolor', indicator_color);
+            Gauge.Dizmo.publish('stdout/barcolor', bar_color);
         },
 
         syncingTasks: function(stdout){
