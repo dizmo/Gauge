@@ -125,17 +125,15 @@ Class("Gauge.Main", {
 
                 if (typeof(Gauge.Dizmo.load('targetval')==='number')){
                     if  (acc===0) {
-                           console.log('lost');
-                       } else if (acc=== undefined) {
-                           console.log('lost');
+                        console.log('lost');
+                        dizmo.setDynamicBackgroundColor(stdout);
                        }  else {
                            console.log('found');
                     }
                 }else {
-                        console.log('lost') ;
+                    console.log('lost') ;
                     dizmo.setDynamicBackgroundColor(stdout);
                 }
-
 
                 Gauge.Dizmo.publish('stdout', stdout);
 
@@ -147,7 +145,7 @@ Class("Gauge.Main", {
                     self.syncValueText(stdout);
                     self.setBackgroundColor(stdout);
                     Gauge.Dizmo.publish('stdout', stdout);
-
+                    dizmo.publicStorage.subscribeToProperty()
                 });
             });
 
@@ -155,8 +153,8 @@ Class("Gauge.Main", {
             dizmo.onUndock(function(undockedDizmo) {
                 if (self.subscriptionId !== undefined) {
                     dizmo.publicStorage.unsubscribeProperty(self.subscriptionId);
-                    Gauge.Dizmo.unpublish('stdout');
-                    //Gauge.Dizmo.unpublish('stdout/frame_color');
+                    //Gauge.Dizmo.unpublish('stdout');
+                    dizmo.publicStorage.deleteProperty('stdout');
                 }
             });
 
@@ -231,7 +229,6 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            //jQuery('#display_data').text(int_targetaccuracy);
             //calculate targetvalue + and minus (100-targetaccuracy)
         },
 
@@ -243,7 +240,7 @@ Class("Gauge.Main", {
 
         setDynamicBackgroundColor: function(value){
             var self = this;
-            var maxval, minval, frame_color, lighter_color;
+            var maxval, minval, frame_color, indicator_color;
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
 
@@ -273,6 +270,7 @@ Class("Gauge.Main", {
             }
             else {
                 frame_color = Gauge.ColorMixer.mix(mincolor, maxcolor, minval, maxval, value);
+                indicator_color =  Gauge.ColorMixer.lightenColor(frame_color, 40);
             }
 
             try{
@@ -282,6 +280,7 @@ Class("Gauge.Main", {
             }
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
+            Gauge.Dizmo.publish('stdout/indicatorcolor', indicator_color);
         },
 
         syncingTasks: function(stdout){
