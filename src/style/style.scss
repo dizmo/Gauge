@@ -32,6 +32,7 @@ body {
     height: 32px;
     width: 300px;
     margin-left: 10px;
+    margin-right: 10px;
     margin-top: 4px;
   }
   /*  #target .tlabel {
@@ -65,8 +66,12 @@ body {
     border: 1px solid white;
     text-align: right;
     color: white !important;
+    margin-right: -10px !important;
   }
-
+  #chart{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 #back {

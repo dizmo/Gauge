@@ -28,19 +28,37 @@ window.document.addEventListener('dizmoready', function() {
 
  */
 
-var ex1 = function( s ) {
+var chart = function( s ) {
     s.setup = function() {
         s.createCanvas(300, 160);
+        s.noStroke();
     };
 
     s.draw = function() {
-        s.ellipse(160, 160, 80, 80);
-        star(50, 50);
+        //s.ellipse(160, 160, 80, 80);
+       // star(50, 50);
+        var value = dizmo.publicStorage.getProperty('stdout');
+        var value_distance = (Gauge.Dizmo.load('maxval'))-(Gauge.Dizmo.load('minval'))
+        var framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+        var indicatorcolor, indicator_width;
+        if (value==='' || value=== undefined){
+            s.noStroke();
+            s.fill('#d9d9d9');
+            s.rect(0, 120,300, 40);
+        }else{
+            indicator_width = value * 300/value_distance
+            indicatorcolor = Gauge.ColorMixer.lightenColor(framecolor, 40);
+            s.noStroke();
+            s.fill(indicatorcolor);
+            s.rect(0, 120,300, indicator_width);
+        }
+
 
     };
-    function star(x, y) {
-        // Modified p5 code to create
-        // a 5-pointed star
+    function indicator(value) {
+        // Draw bar indicator
+
+        var indicator_color = dizmo.publicStorage.getProperty('stdout/indicatorcolor')
 
         s.translate(x, y); // Sets origin to center of the star
         s.rotate(s.frameCount / 200); // Rotates the star
@@ -61,7 +79,7 @@ var ex1 = function( s ) {
 
 };
 
-var one = new p5(ex1, 'ex1');
+var one = new p5(chart, 'chart');
 
 /*
 var ex2 = function( s ) {

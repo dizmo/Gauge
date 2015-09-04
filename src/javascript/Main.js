@@ -281,8 +281,6 @@ Class("Gauge.Main", {
             }
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
-            Gauge.Dizmo.publish('stdout/indicatorcolor', indicator_color);
-            Gauge.Dizmo.publish('stdout/barcolor', bar_color);
         },
 
         setTargetAccuracyBackgroundColor: function(stdout){

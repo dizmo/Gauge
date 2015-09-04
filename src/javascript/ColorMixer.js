@@ -28,6 +28,10 @@ Class('Gauge.ColorMixer', {
             lightenColor: function (color, amount){
                 var usePound = false;
 
+                if (color === undefined){
+                    return;
+                }
+
                 if (color[0] == "#") {
                     color = color.slice(1);
                     usePound = true;
@@ -50,7 +54,8 @@ Class('Gauge.ColorMixer', {
                 if (g > 255) g = 255;
                 else if (g < 0) g = 0;
 
-                return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+                var hex= (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+                return Colors.hex2rgb(hex);
 
             }
         }
