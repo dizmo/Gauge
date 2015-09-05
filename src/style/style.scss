@@ -6,17 +6,6 @@ body {
 #front {
   width: 100%;
 
-  #display_unit {
-    margin-left: auto;
-    margin-right: auto;
-    width: 240px;
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffffff;
-    text-align: center;
-  }
-
   #display_data {
     width: 240px;
     font-size: 100px;
@@ -28,46 +17,35 @@ body {
     //display: table-cell;
     text-align: center;
   }
+  #display_unit {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ffffff;
+  }
   #target {
-    height: 32px;
+    height: 40px;
     width: 300px;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
   }
-  /*  #target .tlabel {
-      line-height: 32px;
-      //float: left;
+    #target .t_label{
       display: inline-block;
-      width: 190px;
+      margin-right: 10px;
+      margin-left: 95px;
+      color: #ffffff !important;
     }
-    #target #tvalue{
-      //float: right;
-      width: 90px;
-      background: #91A63B;
-      text-align: right;
-      display: inline-block;
-      line-height: 32px;
-      border: 1px solid white !important;
-      border-width: 1px;
-      border-style: solid;
-      border-color: white;
-      margin-right: 15px;*/
-  #target .t_label{
-    display: inline-block;
-    margin-right: 100px;
-    color: #ffffff !important;
-  }
 
-  #target #target_textfield{
-    background: #91A63B;
-    display: inline-block;
-    width: 90px;
-    border: 1px solid white;
-    text-align: right;
-    color: white !important;
-    margin-right: -10px !important;
-  }
+    #target #target_textfield{
+      background: #91A63B;
+      display: inline-block;
+      width: 70px;
+      border: 1px solid white;
+      text-align: right;
+      color: white !important;
+      margin-right: -3px !important;
+    }
   #chart{
     margin-left: 10px;
     margin-right: 10px;
