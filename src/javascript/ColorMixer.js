@@ -54,8 +54,7 @@ Class('Gauge.ColorMixer', {
                 if (g > 255) g = 255;
                 else if (g < 0) g = 0;
 
-                var hex= (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
-                return Colors.hex2rgb(hex);
+                return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
 
             }
         }
