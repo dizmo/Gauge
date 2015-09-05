@@ -189,7 +189,7 @@ Class("Gauge.Dizmo", {
             });
 
             dizmo.onShowFront(function() {
-                Gauge.Dizmo.setSize(320,250);
+                Gauge.Dizmo.setSize(320,230);
                 jQuery("#back").hide();
                 jQuery("#front").show();
                 jQuery(events).trigger('dizmo.turned', ['front']);
@@ -222,12 +222,12 @@ Class("Gauge.Dizmo", {
 
             //If a dizmo is docked to this dizmo, the function provided to the onDock function is being called and receives
             //the instance of the docked dizmo as a parameter.
-            dizmo.onDock(function(dockedDizmo) {
+            /*dizmo.onDock(function(dockedDizmo) {
                 // Write code here that should happen when a dizmo has been docked.
                 // The line below is a small example on how to relay the event to other
                 // classes.
                 jQuery(events).trigger('dizmo.docked');
-            });
+            }); */
 
             // onUndock is called when a dizmo has been undocked from this dizmo. The provided function receives the undocked
             // dizmo as a parameter.
