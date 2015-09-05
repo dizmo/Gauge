@@ -92,7 +92,11 @@ var chart = function( s ) {
        // img.position(0, 0);
         s.background(framecolor);
         s.noStroke();
-        s.fill(barcolor);
+        s.fill(255,255,255, 35)
+        s.rect(0, 9,canv_w, bar_h);
+
+        s.noStroke();
+        s.fill(255, 255, 255, 128);
         s.rect(0, 9,bar_w, bar_h);
 
         s.stroke('#fff');
