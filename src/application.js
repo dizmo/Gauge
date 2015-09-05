@@ -18,6 +18,16 @@ function showFront() {
 // Helper object to attach all the events to
 var events = {};
 
+var fcolor
+var subscriptionFrameColor = dizmo.publicStorage.subscribeToProperty('stdout/framecolor', function(path, val, oldVal) {
+ var stdout = val;
+ if (stdout ===undefined){
+     fcolor = '#ededed';
+ }  else{
+     fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+ }
+ });
+
 // As soon as the dom is loaded, and the dizmo is ready, instantiate the main class
 window.document.addEventListener('dizmoready', function() {
     new Gauge.Main();
@@ -29,13 +39,12 @@ window.document.addEventListener('dizmoready', function() {
  */
 
 var chart = function( s ) {
-    var bar_w, barcolor, maxval, minval, target_diff_w, img;
+    var bar_w, barcolor, maxval, minval,
+        target_diff_w, value, targetaccuracy_diff;
 
     var canv_w = 300;
     var canv_h = 80;
     var bar_h = 70;
-    var value =  dizmo.publicStorage.getProperty('stdout');
-    var framecolor = '#456789';//dizmo.publicStorage.getProperty('stdout/framecolor');
 
     if (Gauge.Dizmo.load('maxval')=== undefined){
        maxval = 100;
@@ -52,7 +61,13 @@ var chart = function( s ) {
     var targetval =  Gauge.Dizmo.load('targetval');
     var targetaccuracy =  Gauge.Dizmo.load('targetaccuracy');
     var target_w = targetval * canv_w/(maxval-minval);
-    var targetaccuracy_diff = (targetval-((targetaccuracy*targetval)/100) * canv_w/(maxval-minval));
+    checkonconsole= target_w+target_w;
+
+    if (targetaccuracy === undefined){
+        targetaccuracy_diff = 0;
+    }  else{
+        targetaccuracy_diff = (targetval-((targetaccuracy*targetval)/100) * canv_w/(maxval-minval));
+    }
     console.log('targetaccuracy_diff='+targetaccuracy_diff)
     if (targetaccuracy_diff + target_w >= canv_w){
         checkonconsole= target_w+targetaccuracy_diff;
@@ -64,10 +79,23 @@ var chart = function( s ) {
         target_diff_w = 2 *  targetaccuracy_diff;
     }
 
+    if (fcolor ===undefined){
+        fcolor = '#ededed';
+    }  else{
+        fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+    }
+
+/*    subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
+        value = val;
+        if (value !==undefined){
+            framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+        }  else{
+            framecolor = '#ededed';
+        }
+    });*/
 
 
     if (value === undefined){
-        barcolor =  '#d9d9d9';
         bar_w  = canv_w;
     }else{
         bar_w = value * canv_w/(maxval-minval);
@@ -77,11 +105,12 @@ var chart = function( s ) {
             } else if ((targetval+targetaccuracy) > value && (targetval-targetaccuracy)< value ){
                 barcolor = '#E7A035';
             } else{
-                barcolor = (Gauge.ColorMixer.lightenColor(framecolor, 40));
+                barcolor = (Gauge.ColorMixer.lightenColor(fcolor, 40));
             }
 
         }
     }
+
 
     s.setup = function() {
         s.createCanvas(canv_w, canv_h);
@@ -90,7 +119,7 @@ var chart = function( s ) {
 
     s.draw = function() {
        // img.position(0, 0);
-        s.background(framecolor);
+        s.background(fcolor);
         s.noStroke();
         s.fill(255,255,255, 35)
         s.rect(0, 9,canv_w, bar_h);

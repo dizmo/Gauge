@@ -133,17 +133,19 @@ Class("Gauge.Main", {
                 //self.syncingTasks(stdout);
                 self.syncValueText(stdout);
                 var acc= Gauge.Dizmo.load('targetaccuracy') ;
+                var t_val= Gauge.Dizmo.load('targetval') ;
 
-                if (typeof(Gauge.Dizmo.load('targetval')==='number')){
+                if (typeof(t_val)==='number'){
                     if  (acc===0) {
                         console.log('lost');
-                        dizmo.setDynamicBackgroundColor(stdout);
+                        self.setDynamicBackgroundColor(stdout);
                        }  else {
-                           console.log('found');
+                          console.log('found');
+
                     }
                 }else {
                     console.log('lost') ;
-                    dizmo.setDynamicBackgroundColor(stdout);
+                    self.setDynamicBackgroundColor(stdout);
                 }
 
                 Gauge.Dizmo.publish('stdout', stdout);
@@ -256,8 +258,30 @@ Class("Gauge.Main", {
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
 
-            var maxval = setMax();
-            var minval = setMin();
+            //var maxval = setMax();
+            //var minval = setMin();
+
+            var maxval;
+
+            if (Gauge.Dizmo.load('maxval') === undefined){
+                maxval = 100;
+
+            }
+            else{
+                maxval = Gauge.Dizmo.load('maxval');
+
+            }
+
+            var minval;
+
+            if (Gauge.Dizmo.load('minval') === undefined){
+                minval = 100;
+
+            }
+            else{
+                minval = Gauge.Dizmo.load('minval');
+
+            }
 
             // set minimum and maximum color
 
@@ -269,7 +293,6 @@ Class("Gauge.Main", {
             }
             else {
                 frame_color = Gauge.ColorMixer.mix(mincolor, maxcolor, minval, maxval, value);
-                bar_color =  Gauge.ColorMixer.lightenColor(frame_color, 40);
             }
 
             try{
