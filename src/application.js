@@ -29,110 +29,90 @@ window.document.addEventListener('dizmoready', function() {
  */
 
 var chart = function( s ) {
+    var bar_w, barcolor, maxval, minval, target_diff_w;
+    var canv_w = 300;
+    var canv_h = 80;
+    var bar_h = 70;
+    var value =  dizmo.publicStorage.getProperty('stdout');
+    var framecolor = '#456789';//dizmo.publicStorage.getProperty('stdout/framecolor');
+
+    if (Gauge.Dizmo.load('maxval')=== undefined){
+       maxval = 100;
+    }else{
+     maxval = Gauge.Dizmo.load('maxval');
+    }
+
+    if (Gauge.Dizmo.load('minval')=== undefined){
+        minval = 0;
+    }else{
+        minval = Gauge.Dizmo.load('minval');
+    }
+
+    var targetval =  Gauge.Dizmo.load('targetval');
+    var targetaccuracy =  Gauge.Dizmo.load('targetaccuracy');
+    var target_w = targetval * canv_w/(maxval-minval);
+    var targetaccuracy_diff = (targetval-((targetaccuracy*targetval)/100) * canv_w/(maxval-minval));
+    console.log('targetaccuracy_diff='+targetaccuracy_diff)
+    if (targetaccuracy_diff + target_w >= canv_w){
+        checkonconsole= target_w+targetaccuracy_diff;
+
+        console.log('target_w+targetaccuracy_diff)='+checkonconsole);
+        target_diff_w = target_w+targetaccuracy_diff-(target_w+targetaccuracy_diff -canv_w +1);
+        console.log('target_diff_w '+ target_diff_w)
+    } else{
+        target_diff_w = 2 *  targetaccuracy_diff;
+    }
+
+
+
+    if (value === undefined){
+        barcolor =  '#d9d9d9';
+        bar_w  = canv_w;
+    }else{
+        bar_w = value * canv_w/(maxval-minval);
+        if(typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
+            if(targetval === value){
+                barcolor = '#91A63B';
+            } else if ((targetval+targetaccuracy) > value && (targetval-targetaccuracy)< value ){
+                barcolor = '#E7A035';
+            } else{
+                barcolor = (Gauge.ColorMixer.lightenColor(framecolor, 40));
+            }
+
+        }
+    }
+
     s.setup = function() {
-        s.createCanvas(300, 160);
-        s.noStroke();
+        s.createCanvas(canv_w, canv_h);
     };
 
     s.draw = function() {
-        //s.ellipse(160, 160, 80, 80);
-       // star(50, 50);
-        var value = dizmo.publicStorage.getProperty('stdout');
-        var value_distance = (Gauge.Dizmo.load('maxval'))-(Gauge.Dizmo.load('minval'))
-        var framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-        var indicatorcolor, indicator_width;
-        if (value==='' || value=== undefined){
+
+        s.noStroke();
+        s.fill(barcolor);
+        s.rect(0, 9,bar_w, bar_h);
+
+        s.stroke('#fff');
+        s.noFill();
+        s.rect(target_w-targetaccuracy_diff, 9,2 * target_diff_w, bar_h);
+        //console.log(target_w) ;
+        //console.log(target_w-targetaccuracy_diff) ;
+        //console.log(2*targetaccuracy_diff) ;
+
+        /*if (value !=='' || value !== undefined){
             s.noStroke();
-            s.fill('#d9d9d9');
-            s.rect(0, 120,300, 40);
-        }else{
-            indicator_width = value * 300/value_distance
-            indicatorcolor = Gauge.ColorMixer.lightenColor(framecolor, 40);
-            s.noStroke();
-            s.fill(indicatorcolor);
-            s.rect(0, 120,300, indicator_width);
+            s.fill(barcolor);
+            s.rect(0, 10,bar_w, bar_h);
         }
 
+        if (typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
+            s.Stroke(0,0,0,0);
+            //s.fill(barcolor);
+            s.rect(90, 10,bar_w-30, bar_h);
+        }*/
 
     };
-    function indicator(value) {
-        // Draw bar indicator
-
-        var indicator_color = dizmo.publicStorage.getProperty('stdout/indicatorcolor')
-
-        s.translate(x, y); // Sets origin to center of the star
-        s.rotate(s.frameCount / 200); // Rotates the star
-
-        var angle = (Math.PI * 2) / 5;
-        var halfAngle = angle/2.0;
-        s.beginShape();
-        for (var a = 0; a < Math.PI * 2; a += angle) {
-            var sx = s.cos(a) * 50;
-            var sy = s.sin(a) * 50;
-            s.vertex(sx, sy);
-            sx = s.cos(a+halfAngle) * 30;
-            sy = s.sin(a+halfAngle) * 30;
-            s.vertex(sx, sy);
-        }
-        s.endShape(s.CLOSE);
-    }
-
 };
 
-var one = new p5(chart, 'chart');
+var chart = new p5(chart, 'chart');
 
-/*
-var ex2 = function( s ) {
-
-    var opacity = 200;
-    var step = 3;
-    var round = 0;
-    // Opacity, step, and round are used to
-    // make the star blink
-
-    s.setup = function() {
-        s.createCanvas(640, 480);
-    }
-
-    s.draw = function() {
-        s.stroke(0, 0, 0, 0);
-        s.background(30, 144, 255);
-
-        // Increases/decreases opacity
-        // appropriately
-        if ( round % 2 == 0 )
-            opacity += step;
-        else
-            opacity -= step;
-        if ( opacity >= 255 || opacity <= 200 )
-            round++;
-
-        s.fill(255, opacity); // Change fill through (rgb, a)
-
-        star(s.mouseX, s.mouseY); // Follow the mouse
-    }
-
-    function star(x, y) {
-        // Modified p5 code to create
-        // a 5-pointed star
-
-        s.translate(x, y); // Sets origin to center of the star
-        s.rotate(s.frameCount / 200); // Rotates the star
-
-        var angle = (Math.PI * 2) / 5;
-        var halfAngle = angle/2.0;
-        s.beginShape();
-        for (var a = 0; a < Math.PI * 2; a += angle) {
-            var sx = s.cos(a) * 50;
-            var sy = s.sin(a) * 50;
-            s.vertex(sx, sy);
-            sx = s.cos(a+halfAngle) * 30;
-            sy = s.sin(a+halfAngle) * 30;
-            s.vertex(sx, sy);
-        }
-        s.endShape(s.CLOSE);
-    }
-}
-
-var ex2 = new p5(ex2, 'ex2');
-*/
