@@ -29,7 +29,8 @@ window.document.addEventListener('dizmoready', function() {
  */
 
 var chart = function( s ) {
-    var bar_w, barcolor, maxval, minval, target_diff_w;
+    var bar_w, barcolor, maxval, minval, target_diff_w, img;
+
     var canv_w = 300;
     var canv_h = 80;
     var bar_h = 70;
@@ -84,10 +85,12 @@ var chart = function( s ) {
 
     s.setup = function() {
         s.createCanvas(canv_w, canv_h);
+        //img = s.loadImage("assets/shadow.jpg");
     };
 
     s.draw = function() {
-
+       // img.position(0, 0);
+        s.background(framecolor);
         s.noStroke();
         s.fill(barcolor);
         s.rect(0, 9,bar_w, bar_h);
@@ -95,9 +98,6 @@ var chart = function( s ) {
         s.stroke('#fff');
         s.noFill();
         s.rect(target_w-targetaccuracy_diff, 9, target_diff_w, bar_h);
-        //console.log(target_w) ;
-        //console.log(target_w-targetaccuracy_diff) ;
-        //console.log(2*targetaccuracy_diff) ;
 
         /*if (value !=='' || value !== undefined){
             s.noStroke();
@@ -115,4 +115,3 @@ var chart = function( s ) {
 };
 
 var chart = new p5(chart, 'chart');
-
