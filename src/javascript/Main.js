@@ -311,12 +311,19 @@ Class("Gauge.Main", {
             var totalMissColor = '#EF3B45';
 
             if(targetval === value){
-                barcolor = '#91A63B';
+                frame_color = onTargetColor;
             } else if ((targetval+targetaccuracy) > value && (targetval-targetaccuracy)< value ){
-                barcolor = '#E7A035';
+                frame_color = missedColor;
             } else{
-                barcolor = (Gauge.ColorMixer.lightenColor(fcolor, 40));
+                frame_color = totalMissColor;
             }
+            try{
+                dizmo.setAttribute('settings/framecolor', frame_color);
+            } catch (err){
+                console.log(err);
+            }
+
+            Gauge.Dizmo.publish('stdout/framecolor', frame_color);
         },
 
         setMax: function(){
