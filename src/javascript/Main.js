@@ -141,7 +141,7 @@ Class("Gauge.Main", {
                         self.setDynamicBackgroundColor(stdout);
                        }  else {
                           console.log('found');
-
+                          self.setTargetAccuracyBackgroundColor(t_val, acc, stdout)
                     }
                 }else {
                     console.log('lost') ;
@@ -304,11 +304,19 @@ Class("Gauge.Main", {
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
         },
 
-        setTargetAccuracyBackgroundColor: function(stdout){
+        setTargetAccuracyBackgroundColor: function(targetval, targetaccuracy, value){
             var self = this;
-            var maxval, minval, frame_color, indicator_color, bar_color;
-            var mincolor = '#ADC837';
-            var maxcolor = '#EF3B45';
+            var onTargetColor = '#ADC837';
+            var missedColor = '#F8AA41';
+            var totalMissColor = '#EF3B45';
+
+            if(targetval === value){
+                barcolor = '#91A63B';
+            } else if ((targetval+targetaccuracy) > value && (targetval-targetaccuracy)< value ){
+                barcolor = '#E7A035';
+            } else{
+                barcolor = (Gauge.ColorMixer.lightenColor(fcolor, 40));
+            }
         },
 
         setMax: function(){
