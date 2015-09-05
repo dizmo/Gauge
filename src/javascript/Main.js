@@ -156,7 +156,7 @@ Class("Gauge.Main", {
                     self.syncValueText(stdout);
                     self.setBackgroundColor(stdout);
                     Gauge.Dizmo.publish('stdout', stdout);
-                    dizmo.publicStorage.subscribeToProperty()
+                    dizmo.publicStorage.subscribeToProperty();
                 });
             });
 
@@ -168,7 +168,6 @@ Class("Gauge.Main", {
                     dizmo.publicStorage.deleteProperty('stdout');
                 }
             });
-
 
 
         },
@@ -270,8 +269,7 @@ Class("Gauge.Main", {
             }
             else {
                 frame_color = Gauge.ColorMixer.mix(mincolor, maxcolor, minval, maxval, value);
-                indicator_color =  Gauge.ColorMixer.lightenColor(frame_color, 40);
-                bar_color =  Gauge.ColorMixer.lightenColor(frame_color, -40);
+                bar_color =  Gauge.ColorMixer.lightenColor(frame_color, 40);
             }
 
             try{
@@ -292,7 +290,7 @@ Class("Gauge.Main", {
 
         setMax: function(){
             var self = this;
-            var maxval
+            var maxval;
 
             if (Gauge.Dizmo.load('maxval') === undefined){
                 maxval = 100;
@@ -306,7 +304,7 @@ Class("Gauge.Main", {
 
         setMin: function(){
             var self = this;
-            var minval
+            var minval;
 
             if (Gauge.Dizmo.load('minval') === undefined){
                 minval = 100;
