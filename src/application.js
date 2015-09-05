@@ -57,8 +57,8 @@ var chart = function( s ) {
         checkonconsole= target_w+targetaccuracy_diff;
 
         console.log('target_w+targetaccuracy_diff)='+checkonconsole);
-        target_diff_w = target_w+targetaccuracy_diff-(target_w+targetaccuracy_diff -canv_w +1);
-        console.log('target_diff_w '+ target_diff_w)
+        target_diff_w = canv_w -target_w +targetaccuracy_diff - 1;
+        console.log('target_diff_w ='+ target_diff_w)
     } else{
         target_diff_w = 2 *  targetaccuracy_diff;
     }
@@ -94,7 +94,7 @@ var chart = function( s ) {
 
         s.stroke('#fff');
         s.noFill();
-        s.rect(target_w-targetaccuracy_diff, 9,2 * target_diff_w, bar_h);
+        s.rect(target_w-targetaccuracy_diff, 9, target_diff_w, bar_h);
         //console.log(target_w) ;
         //console.log(target_w-targetaccuracy_diff) ;
         //console.log(2*targetaccuracy_diff) ;
