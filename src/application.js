@@ -19,12 +19,12 @@ function showFront() {
 var events = {};
 
 var fcolor
-var subscriptionFrameColor = dizmo.publicStorage.subscribeToProperty('stdout/framecolor', function(path, val, oldVal) {
- var stdout = val;
- if (stdout ===undefined){
-     fcolor = '#ededed';
- }  else{
+var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
+ value = val;
+ if (value !==undefined){
      fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+ }  else{
+     fcolor = '#ededed';
  }
  });
 
@@ -79,7 +79,7 @@ var chart = function( s ) {
         target_diff_w = 2 *  targetaccuracy_diff;
     }
 
-    if (fcolor ===undefined){
+    if (dizmo.publicStorage.getProperty ===undefined){
         fcolor = '#ededed';
     }  else{
         fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
@@ -97,6 +97,7 @@ var chart = function( s ) {
 
     if (value === undefined){
         bar_w  = canv_w;
+        barcolor = (237, 237, 237, 36);
     }else{
         bar_w = value * canv_w/(maxval-minval);
         if(typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
