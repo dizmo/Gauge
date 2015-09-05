@@ -28,25 +28,27 @@
     <div id="target">
         <!--<div class="tlabel">Target value</div>
         <div id="tvalue"></div>-->
+        <div id="display_unit">
+        </div>
         <label for="target_textfield" class="t_label" style="color:white">Target value</label>
         <input id="target_textfield" class="t_textfield" type="text"
                data-type="dizmo-input" readonly="true" >
     </div>
-    <!--<canvas class="gauge" id="ex1" width="300" height="160"></canvas>-->
-    <!--<canvas class="clock" id="canvas" width="340" height="340"></canvas>-->
+
     <div id="chart"></div>
-    <div id="display_unit">
+
+    <div id="values">
+        <div id="display_minval">  0
+        </div>
+        <div id="display_maxval">   4
+        </div>
+        <div id="display_data">   100
+        </div>
     </div>
-    <div id="display_minval">
-    </div>
-    <div id="display_data">
-    </div>
-    <div id="display_maxval">
-    </div>
-</div>
+
 
 </div>
-</div>
+
 <div id="back">
     <div class="gauge_description">
         Dock this dizmo to another <br> to display its output as a <br>numerical value.
