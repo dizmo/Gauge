@@ -138,31 +138,44 @@ body {
     float: right;
     width: 110px;
   }
-  .target_accuracy {
+  .target_range {
     height: 32px;
     margin-bottom: 10px;
   }
-  .target_accuracy .target_accuracy_label {
+  .target_range .target__range_label {
     line-height: 32px;
   }
-  .target_accuracy .target_accuracy_input{
+  .target_range .target_range_input{
     float: right;
     width: 110px;
   }
-/*  .accuracy_select_wrapper {
-    margin-top: 5px;
-    margin-bottom: 10px;
-  }
-  .accuracy_select_wrapper label.accuracy_label {
-    line-height: 32px;
-    margin-bottom: 10px;
-    margin-right: 45px;
-  }
-  .accuracy_select_wrapper select#accuracy_select {
-    float: right;
-    width: 120px;
+  /*
+ .target_accuracy {
+   height: 32px;
+   margin-bottom: 10px;
+ }
 
-  }*/
+ .target_accuracy .target_accuracy_label {
+   line-height: 32px;
+ }
+ .target_accuracy .target_accuracy_input{
+   float: right;
+   width: 110px;
+ }
+ .accuracy_select_wrapper {
+   margin-top: 5px;
+   margin-bottom: 10px;
+ }
+ .accuracy_select_wrapper label.accuracy_label {
+   line-height: 32px;
+   margin-bottom: 10px;
+   margin-right: 45px;
+ }
+ .accuracy_select_wrapper select#accuracy_select {
+   float: right;
+   width: 120px;
+
+ }*/
 
   .done-btn-wrapper {
     position: absolute;

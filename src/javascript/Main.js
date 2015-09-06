@@ -41,10 +41,10 @@ Class("Gauge.Main", {
                 return Gauge.Dizmo.load('targetval');
             }
         },
-        targetaccuracy: {
+        targetrange: {
             is: 'rw',
             init: function() {
-                return Gauge.Dizmo.load('targetaccuracy');
+                return Gauge.Dizmo.load('targetrange');
             }
         }
     },
@@ -60,7 +60,7 @@ Class("Gauge.Main", {
             jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
             jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
             jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
-            jQuery('#target_accuracy_inputfield').val(Gauge.Dizmo.load('targetaccuracy'));
+            jQuery('#target_range_inputfield').val(Gauge.Dizmo.load('targetrange'));
 
             if (Gauge.Dizmo.load('targetval')=== undefined){
                 $('.t_label').hide();
@@ -111,11 +111,11 @@ Class("Gauge.Main", {
                 }
 
                 //var targetaccuracy = DizmoElements('.accuracy-select').val();
-                var targetaccuracy = jQuery('.target_accuracy input').val();
-                if (targetaccuracy !== '') {
-                    self.setAccuracy(targetaccuracy);
+                var targetrange = jQuery('.target_range input').val();
+                if (targetrange !== '') {
+                    self.setRange(targetrange);
                 }else {
-                    dizmo.privateStorage.deleteProperty("targetaccuracy");
+                    dizmo.privateStorage.deleteProperty("targetrange");
                 }
 
 
@@ -134,16 +134,16 @@ Class("Gauge.Main", {
                 //console.log(stdout);
                 //self.syncingTasks(stdout);
                 self.syncValueText(stdout);
-                var acc= Gauge.Dizmo.load('targetaccuracy') ;
+                var range= Gauge.Dizmo.load('targetrange') ;
                 var t_val= Gauge.Dizmo.load('targetval') ;
 
                 if (typeof(t_val)==='number'){
-                    if  (acc===0) {
+                    if  (range===0) {
                         console.log('lost');
                         self.setDynamicBackgroundColor(stdout);
                     }  else {
                         console.log('found');
-                        self.setTargetAccuracyBackgroundColor(t_val, acc, stdout);
+                        self.setTargetRangeBackgroundColor(t_val, range, stdout);
                     }
                 }else {
                     console.log('lost') ;
@@ -166,16 +166,16 @@ Class("Gauge.Main", {
                     var stdout = val;
                     //self.syncingTasks(stdout);
                     self.syncValueText(stdout);
-                    var acc= Gauge.Dizmo.load('targetaccuracy') ;
+                    var range= Gauge.Dizmo.load('targetrange') ;
                     var t_val= Gauge.Dizmo.load('targetval') ;
 
                     if (typeof(t_val)==='number'){
-                        if  (acc===0) {
+                        if  (range===0) {
                             console.log('lost');
                             self.setDynamicBackgroundColor(stdout);
                         }  else {
                             console.log('found');
-                            self.setTargetAccuracyBackgroundColor(t_val, acc, stdout);
+                            self.setTargetRangeBackgroundColor(t_val, range, stdout);
                         }
                     }else {
                         console.log('lost') ;
@@ -218,6 +218,7 @@ Class("Gauge.Main", {
                 Gauge.Dizmo.save('unit', unit);
             }
             jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
+            jQuery('.t_label').css('margin-right', '3px');
         },
 
         setMaxval: function(maxval){
@@ -264,17 +265,18 @@ Class("Gauge.Main", {
 
 
             jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
-            //show target value in the donut
+            $('.t_label').show();
+            $('#target_textfield').show();
         },
 
-        setAccuracy: function(targetaccuracy){
+        setRange: function(targetrange){
             var self = this;
 
-            var int_targetaccuracy = Math.abs(parseInt(targetaccuracy));
+            var int_targetrange = Math.abs(parseInt(targetrange));
 
-            if (jQuery.type(int_targetaccuracy) === 'number') {
+            if (jQuery.type(int_targetrange) === 'number') {
                 try {
-                    Gauge.Dizmo.save('targetaccuracy', int_targetaccuracy);
+                    Gauge.Dizmo.save('targetrange', int_targetrange);
                 } catch(ex) {
                     console.error (ex);
                 }
@@ -363,7 +365,7 @@ Class("Gauge.Main", {
             console.log('target_textfield_background ='+ target_textfield_background);
         },
 
-        setTargetAccuracyBackgroundColor: function(targetval, targetaccuracy, value){
+        setTargetRangeBackgroundColor: function(targetval, targetrange, value){
             var self = this;
             var onTargetColor = '#ADC837';
             var missedColor = '#F8AA41';
@@ -372,7 +374,7 @@ Class("Gauge.Main", {
 
             if(targetval === value){
                 frame_color = onTargetColor;
-            } else if ((targetval+targetaccuracy) > value && (targetval-targetaccuracy)< value ){
+            } else if ((targetval+targetrange) > value && (targetval-targetrange)< value ){
                 frame_color = missedColor;
             } else{
                 frame_color = totalMissColor;

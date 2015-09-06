@@ -31,7 +31,7 @@ window.document.addEventListener('dizmoready', function() {
 
 var chart = function( s ) {
     var bar_w, barcolor, maxval, minval, val, fcolor,
-        target_diff_w, targetaccuracy_diff;
+        target_diff_w, targetrange_diff, targetrange_start, targetrange_w;
 
     var canv_w = 300;
     var canv_h = 80;
@@ -57,22 +57,21 @@ var chart = function( s ) {
             minval = Gauge.Dizmo.load('minval');
         }
 
+        if (dizmo.publicStorage.getProperty('stdout') ===undefined){
+            fcolor = '#ADC837';
+        }  else{
+            fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+        }
+
+        val =  dizmo.publicStorage.getProperty('stdout');
+
+        bar_w = val * canv_w/(maxval-minval);
+
         var targetval =  Gauge.Dizmo.load('targetval');
-        var targetaccuracy =  Gauge.Dizmo.load('targetaccuracy');
+        var targetrange =  Gauge.Dizmo.load('targetrange');
+        console.log('targetrange='+targetrange);
         var target_w = targetval * canv_w/(maxval-minval);
 
-        if (targetaccuracy === undefined){
-            targetaccuracy_diff = 0;
-        }  else{
-            targetaccuracy_diff = (targetval-((targetaccuracy*targetval)/100) * canv_w/(maxval-minval));
-        }
-        //console.log('targetaccuracy_diff='+targetaccuracy_diff);
-        if (targetaccuracy_diff + target_w >= canv_w){
-            target_diff_w = canv_w -target_w +targetaccuracy_diff - 1;
-            //console.log('target_diff_w ='+ target_diff_w);
-        } else{
-            target_diff_w = 2 *  targetaccuracy_diff;
-        }
 
         if (dizmo.publicStorage.getProperty('stdout') ===undefined){
             fcolor = '#ADC837';
@@ -85,6 +84,23 @@ var chart = function( s ) {
         bar_w = val * canv_w/(maxval-minval);
         //console.log('bar_w='+ bar_w);
 
+        if (targetrange === undefined){
+            range = 0;
+        }  else{
+            targetrange_start = (targetval - targetrange) * canv_w/(maxval-minval);
+               console.log('targetval, targetrange = '+(targetval) +' '+targetrange);
+               console.log('targetrange_diff = '+(targetrange_diff));
+               range_w = 2* targetrange * canv_w/(maxval-minval);
+        }
+
+
+        if (range_w + target_w < canv_w){
+            targetrange_w = range_w;
+            console.log('targetrange_w ='+ targetrange_w);
+        } else{
+            targetrange_w = (targetval+(2*targetrange)-maxval);
+        }
+
         s.background(fcolor);
         s.noStroke();
         s.fill(255,255,255, 32);
@@ -94,14 +110,18 @@ var chart = function( s ) {
         s.fill(255, 255, 255, 127);
         s.rect(0, 9,bar_w, bar_h);
 
-        if (val !== undefined){
-            if (typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
+        s.stroke('#fff');
+        s.noFill();
+        s.rect(targetrange_start, 9, targetrange_w, bar_h);
+
+        /*if (val !== undefined){
+            if (typeof(targetval) ===  'number' && typeof(targetrange) === 'number'){
                 s.stroke('#fff');
                 s.noFill();
-                s.rect(target_w-targetaccuracy_diff, 9, target_diff_w, bar_h);
+                s.rect(targetrange_diff, 9, target_diff_w, bar_h);
             }
         }
-
+*/
     };
 };
 
