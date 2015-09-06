@@ -111,18 +111,14 @@ var chart = function( s ) {
         s.fill(255, 255, 255, 127);
         s.rect(0, 9,bar_w, bar_h);
 
-        s.stroke('#fff');
-        s.noFill();
-        s.rect(targetrange_start, 9, targetrange_w, bar_h);
-
-        /*if (val !== undefined){
+        if (val !== undefined){
             if (typeof(targetval) ===  'number' && typeof(targetrange) === 'number'){
                 s.stroke('#fff');
                 s.noFill();
-                s.rect(targetrange_diff, 9, target_diff_w, bar_h);
+                s.rect(targetrange_start, 9, targetrange_w, bar_h);
             }
         }
-*/
+
     };
 };
 
