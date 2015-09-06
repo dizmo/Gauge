@@ -18,28 +18,18 @@ function showFront() {
 // Helper object to attach all the events to
 var events = {};
 
-var fcolor
-var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
- value = val;
- if (value !==undefined){
-     fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
- }  else{
-     fcolor = '#ededed';
- }
- });
-
 // As soon as the dom is loaded, and the dizmo is ready, instantiate the main class
 window.document.addEventListener('dizmoready', function() {
     new Gauge.Main();
 
 });
 
-/* Draw the speedometer
+/* Draw the bar speedometer
 
  */
 
 var chart = function( s ) {
-    var bar_w, barcolor, maxval, minval,
+    var bar_w, barcolor, maxval, minval, framecolor, value,
         target_diff_w, value, targetaccuracy_diff;
 
     var canv_w = 300;
@@ -61,7 +51,6 @@ var chart = function( s ) {
     var targetval =  Gauge.Dizmo.load('targetval');
     var targetaccuracy =  Gauge.Dizmo.load('targetaccuracy');
     var target_w = targetval * canv_w/(maxval-minval);
-    checkonconsole= target_w+target_w;
 
     if (targetaccuracy === undefined){
         targetaccuracy_diff = 0;
@@ -70,20 +59,33 @@ var chart = function( s ) {
     }
     console.log('targetaccuracy_diff='+targetaccuracy_diff)
     if (targetaccuracy_diff + target_w >= canv_w){
-        checkonconsole= target_w+targetaccuracy_diff;
-
-        console.log('target_w+targetaccuracy_diff)='+checkonconsole);
         target_diff_w = canv_w -target_w +targetaccuracy_diff - 1;
         console.log('target_diff_w ='+ target_diff_w)
     } else{
         target_diff_w = 2 *  targetaccuracy_diff;
     }
 
-    if (dizmo.publicStorage.getProperty ===undefined){
-        fcolor = '#ededed';
+    if (dizmo.publicStorage.getProperty('stdout') ===undefined){
+        framecolor = '#ededed';
     }  else{
-        fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+        framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
     }
+
+
+/*    var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
+        value = val;
+        console.log(value);
+        if (value ===undefined){
+            framecolor = '#ededed';
+        }  else{
+            framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+        }
+    });*/
+
+    value =  dizmo.publicStorage.getProperty('stdout');
+
+    bar_w = value * canv_w/(maxval-minval);
+    console.log('bar_w='+ bar_w);
 
 /*    subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
         value = val;
@@ -94,25 +96,6 @@ var chart = function( s ) {
         }
     });*/
 
-
-    if (value === undefined){
-        bar_w  = canv_w;
-        barcolor = (237, 237, 237, 36);
-    }else{
-        bar_w = value * canv_w/(maxval-minval);
-        if(typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
-            if(targetval === value){
-                barcolor = '#91A63B';
-            } else if ((targetval+targetaccuracy) > value && (targetval-targetaccuracy)< value ){
-                barcolor = '#E7A035';
-            } else{
-                barcolor = (Gauge.ColorMixer.lightenColor(fcolor, 40));
-            }
-
-        }
-    }
-
-
     s.setup = function() {
         s.createCanvas(canv_w, canv_h);
         //img = s.loadImage("assets/shadow.jpg");
@@ -120,30 +103,20 @@ var chart = function( s ) {
 
     s.draw = function() {
        // img.position(0, 0);
-        s.background(fcolor);
+        s.background(framecolor);
         s.noStroke();
-        s.fill(255,255,255, 35)
+        s.fill(255,255,255, 32)
         s.rect(0, 9,canv_w, bar_h);
 
         s.noStroke();
-        s.fill(255, 255, 255, 128);
+        s.fill(255, 255, 255, 127);
         s.rect(0, 9,bar_w, bar_h);
 
-        s.stroke('#fff');
-        s.noFill();
-        s.rect(target_w-targetaccuracy_diff, 9, target_diff_w, bar_h);
-
-        /*if (value !=='' || value !== undefined){
-            s.noStroke();
-            s.fill(barcolor);
-            s.rect(0, 10,bar_w, bar_h);
-        }
-
         if (typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
-            s.Stroke(0,0,0,0);
-            //s.fill(barcolor);
-            s.rect(90, 10,bar_w-30, bar_h);
-        }*/
+            s.stroke('#fff');
+            s.noFill();
+            s.rect(target_w-targetaccuracy_diff, 9, target_diff_w, bar_h);
+        }
 
     };
 };

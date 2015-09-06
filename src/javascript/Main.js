@@ -158,7 +158,21 @@ Class("Gauge.Main", {
                     var stdout = val;
                     //self.syncingTasks(stdout);
                     self.syncValueText(stdout);
-                    self.setBackgroundColor(stdout);
+                    var acc= Gauge.Dizmo.load('targetaccuracy') ;
+                    var t_val= Gauge.Dizmo.load('targetval') ;
+
+                    if (typeof(t_val)==='number'){
+                        if  (acc===0) {
+                            console.log('lost');
+                            self.setDynamicBackgroundColor(stdout);
+                        }  else {
+                            console.log('found');
+                            self.setTargetAccuracyBackgroundColor(t_val, acc, stdout)
+                        }
+                    }else {
+                        console.log('lost') ;
+                        self.setDynamicBackgroundColor(stdout);
+                    }
                     Gauge.Dizmo.publish('stdout', stdout);
                     dizmo.publicStorage.subscribeToProperty();
                 });
@@ -248,9 +262,26 @@ Class("Gauge.Main", {
         },
 
         syncValueText: function (value) {
-            var nv=value;
+             var format = function (float, ext) {
+             var string = float.toString();
+             var parts = string.split('.');
+             if (parts.length > 1) {
+             return parts[0] + '.' + parts[1].slice(0, ext);
+             } else if (parts.length > 0) {
+             return parts[0] + '.0';
+             } else {
+             return '0.0';
+             }
+             };
+
+             if (jQuery.isNumeric(value)) {
+             jQuery('#display_data').text(format(value, 1));
+             } else {
+             jQuery('#display_data').text('');
+             }
+            /*var nv=value;
             console.log(nv);
-            jQuery('#display_data').text(nv);
+            jQuery('#display_data').text(nv); */
         },
 
         setDynamicBackgroundColor: function(value){
