@@ -184,6 +184,8 @@ Class("Gauge.Main", {
                     dizmo.publicStorage.unsubscribeProperty(self.subscriptionId);
                     //Gauge.Dizmo.unpublish('stdout');
                     dizmo.publicStorage.deleteProperty('stdout');
+                    dizmo.setAttribute('settings/framecolor', '#ADC837');
+                    jQuery('#display_data').text('0');
                 }
             });
 
