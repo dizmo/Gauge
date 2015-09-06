@@ -65,6 +65,8 @@ Class("Gauge.Main", {
             if (Gauge.Dizmo.load('targetval')=== undefined){
                 $('.t_label').hide();
                 $('#target_textfield').hide();
+                //$('#target_textfield').css('margin-right', 'auto');
+                //$('#target_textfield').css('margin-left', 'auto');
             }else{
                 $('.t_label').show();
                 $('#target_textfield').show();
@@ -243,7 +245,6 @@ Class("Gauge.Main", {
                     console.error (ex);
                 }
             }
-            //calculate targetvalue + and minus (100-targetaccuracy)
         },
 
         syncValueText: function (value) {
@@ -302,6 +303,10 @@ Class("Gauge.Main", {
             }
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
+
+            var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60)
+            jQuery('#target_textfield').css('background', Gauge.ColorMixer.lightenColor(frame_color, -60));
+            console.log('target_textfield_background ='+ target_textfield_background);
         },
 
         setTargetAccuracyBackgroundColor: function(targetval, targetaccuracy, value){
@@ -324,6 +329,9 @@ Class("Gauge.Main", {
             }
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
+            var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60)
+            jQuery('#target_textfield').css('background', Gauge.ColorMixer.lightenColor(frame_color, -60));
+            console.log('target_textfield_background ='+ target_textfield_background);
         },
 
         setMax: function(){
