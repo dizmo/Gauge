@@ -218,7 +218,7 @@ Class("Gauge.Main", {
                 Gauge.Dizmo.save('unit', unit);
             }
             jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
-            jQuery('.t_label').css('margin-right', '3px');
+
         },
 
         setMaxval: function(maxval){
