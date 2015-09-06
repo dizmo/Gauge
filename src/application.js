@@ -37,7 +37,8 @@ window.document.addEventListener('dizmoready', function() {
 
 /* Draw the bar speedometer
 
- */
+*/
+
 
 var chart = function( s ) {
     var bar_w, barcolor, maxval, minval, val, fcolor,
@@ -76,10 +77,10 @@ var chart = function( s ) {
         }  else{
             targetaccuracy_diff = (targetval-((targetaccuracy*targetval)/100) * canv_w/(maxval-minval));
         }
-        console.log('targetaccuracy_diff='+targetaccuracy_diff);
+        //console.log('targetaccuracy_diff='+targetaccuracy_diff);
         if (targetaccuracy_diff + target_w >= canv_w){
             target_diff_w = canv_w -target_w +targetaccuracy_diff - 1;
-            console.log('target_diff_w ='+ target_diff_w);
+            //console.log('target_diff_w ='+ target_diff_w);
         } else{
             target_diff_w = 2 *  targetaccuracy_diff;
         }
@@ -93,7 +94,7 @@ var chart = function( s ) {
         val =  dizmo.publicStorage.getProperty('stdout');
 
         bar_w = val * canv_w/(maxval-minval);
-        console.log('bar_w='+ bar_w);
+        //console.log('bar_w='+ bar_w);
 
         s.background(fcolor);
         s.noStroke();
@@ -104,10 +105,12 @@ var chart = function( s ) {
         s.fill(255, 255, 255, 127);
         s.rect(0, 9,bar_w, bar_h);
 
-        if (typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
-            s.stroke('#fff');
-            s.noFill();
-            s.rect(target_w-targetaccuracy_diff, 9, target_diff_w, bar_h);
+        if (val !== undefined){
+            if (typeof(targetval) ===  'number' && typeof(targetaccuracy) === 'number'){
+                s.stroke('#fff');
+                s.noFill();
+                s.rect(target_w-targetaccuracy_diff, 9, target_diff_w, bar_h);
+            }
         }
 
     };

@@ -174,7 +174,7 @@ Class("Gauge.Main", {
                         self.setDynamicBackgroundColor(stdout);
                     }
                     Gauge.Dizmo.publish('stdout', stdout);
-                    dizmo.publicStorage.subscribeToProperty();
+                    //dizmo.publicStorage.subscribeToProperty();
                 });
             });
 
@@ -292,6 +292,9 @@ Class("Gauge.Main", {
             var mincolor = '#ADC837';
             var maxcolor = '#EF3B45';
 
+            //frame_color = Gauge.ColorMixer.mix(mincolor, maxcolor, 0, 100, value);
+            //console.log('keine schlaufe mixermixer '+value);
+
             //var maxval = setMax();
             //var minval = setMin();
 
@@ -309,7 +312,7 @@ Class("Gauge.Main", {
             var minval;
 
             if (Gauge.Dizmo.load('minval') === undefined){
-                minval = 100;
+                minval = 0;
 
             }
             else{
@@ -336,7 +339,7 @@ Class("Gauge.Main", {
             }
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
-
+            console.log('frame_color ='+ frame_color);
             var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60);
             jQuery('#target_textfield').css('background', Gauge.ColorMixer.lightenColor(frame_color, -60));
             console.log('target_textfield_background ='+ target_textfield_background);
