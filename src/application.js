@@ -17,7 +17,7 @@ function showFront() {
 
 // Helper object to attach all the events to
 var events = {};
-var val, fcolor;
+/*var val, fcolor;
 
 var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
     val = val;
@@ -27,7 +27,7 @@ var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', funct
     }  else{
         fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
     }
-});
+});*/
 
 // As soon as the dom is loaded, and the dizmo is ready, instantiate the main class
 window.document.addEventListener('dizmoready', function() {
@@ -40,7 +40,7 @@ window.document.addEventListener('dizmoready', function() {
  */
 
 var chart = function( s ) {
-    var bar_w, barcolor, maxval, minval,
+    var bar_w, barcolor, maxval, minval, val, fcolor,
         target_diff_w, targetaccuracy_diff;
 
     var canv_w = 300;
@@ -76,11 +76,11 @@ var chart = function( s ) {
         target_diff_w = 2 *  targetaccuracy_diff;
     }
 
-    /* if (dizmo.publicStorage.getProperty('stdout') ===undefined){
-     framecolor = '#ededed';
-     }  else{
-     fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-     }*/
+    if (dizmo.publicStorage.getProperty('stdout') ===undefined){
+        fcolor = '#ededed';
+    }  else{
+        fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+    }
 
 
     /*    var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
@@ -93,7 +93,7 @@ var chart = function( s ) {
      }
      });*/
 
-    //value =  dizmo.publicStorage.getProperty('stdout');
+    val =  dizmo.publicStorage.getProperty('stdout');
 
     bar_w = val * canv_w/(maxval-minval);
     console.log('bar_w='+ bar_w);
