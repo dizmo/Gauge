@@ -17,17 +17,6 @@ function showFront() {
 
 // Helper object to attach all the events to
 var events = {};
-/*var val, fcolor;
-
-var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
-    val = val;
-    console.log(val);
-    if (val ===undefined){
-        fcolor = '#ededed';
-    }  else{
-        fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-    }
-});*/
 
 // As soon as the dom is loaded, and the dizmo is ready, instantiate the main class
 window.document.addEventListener('dizmoready', function() {
