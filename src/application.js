@@ -94,11 +94,12 @@ var chart = function( s ) {
         }
 
 
-        if (range_w + target_w < canv_w){
+        if ((range_w/2) + target_w < canv_w){
             targetrange_w = range_w;
             console.log('targetrange_w ='+ targetrange_w);
         } else{
-            targetrange_w = (targetval+(2*targetrange)-maxval);
+            //targetrange_w = (targetval+(2*targetrange)-maxval)* canv_w/(maxval-minval);
+            targetrange_w = canv_w -target_w + (range_w/2) - 1;
         }
 
         s.background(fcolor);
