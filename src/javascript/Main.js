@@ -141,9 +141,9 @@ Class("Gauge.Main", {
                     if  (acc===0) {
                         console.log('lost');
                         self.setDynamicBackgroundColor(stdout);
-                       }  else {
-                          console.log('found');
-                          self.setTargetAccuracyBackgroundColor(t_val, acc, stdout)
+                    }  else {
+                        console.log('found');
+                        self.setTargetAccuracyBackgroundColor(t_val, acc, stdout);
                     }
                 }else {
                     console.log('lost') ;
@@ -167,7 +167,7 @@ Class("Gauge.Main", {
                             self.setDynamicBackgroundColor(stdout);
                         }  else {
                             console.log('found');
-                            self.setTargetAccuracyBackgroundColor(t_val, acc, stdout)
+                            self.setTargetAccuracyBackgroundColor(t_val, acc, stdout);
                         }
                     }else {
                         console.log('lost') ;
@@ -262,26 +262,26 @@ Class("Gauge.Main", {
         },
 
         syncValueText: function (value) {
-             var format = function (float, ext) {
-             var string = float.toString();
-             var parts = string.split('.');
-             if (parts.length > 1) {
-             return parts[0] + '.' + parts[1].slice(0, ext);
-             } else if (parts.length > 0) {
-             return parts[0] + '.0';
-             } else {
-             return '0.0';
-             }
-             };
+            var format = function (float, ext) {
+                var string = float.toString();
+                var parts = string.split('.');
+                if (parts.length > 1) {
+                    return parts[0] + '.' + parts[1].slice(0, ext);
+                } else if (parts.length > 0) {
+                    return parts[0] + '.0';
+                } else {
+                    return '0.0';
+                }
+            };
 
-             if (jQuery.isNumeric(value)) {
-             jQuery('#display_data').text(format(value, 1));
-             } else {
-             jQuery('#display_data').text('');
-             }
+            if (jQuery.isNumeric(value)) {
+                jQuery('#display_data').text(format(value, 1));
+            } else {
+                jQuery('#display_data').text('');
+            }
             /*var nv=value;
-            console.log(nv);
-            jQuery('#display_data').text(nv); */
+             console.log(nv);
+             jQuery('#display_data').text(nv); */
         },
 
         setDynamicBackgroundColor: function(value){
@@ -335,7 +335,7 @@ Class("Gauge.Main", {
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
 
-            var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60)
+            var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60);
             jQuery('#target_textfield').css('background', Gauge.ColorMixer.lightenColor(frame_color, -60));
             console.log('target_textfield_background ='+ target_textfield_background);
         },
@@ -345,6 +345,7 @@ Class("Gauge.Main", {
             var onTargetColor = '#ADC837';
             var missedColor = '#F8AA41';
             var totalMissColor = '#EF3B45';
+            var frame_color;
 
             if(targetval === value){
                 frame_color = onTargetColor;
@@ -360,7 +361,7 @@ Class("Gauge.Main", {
             }
 
             Gauge.Dizmo.publish('stdout/framecolor', frame_color);
-            var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60)
+            var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60);
             jQuery('#target_textfield').css('background', Gauge.ColorMixer.lightenColor(frame_color, -60));
             console.log('target_textfield_background ='+ target_textfield_background);
         },

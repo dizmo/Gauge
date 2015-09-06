@@ -1,9 +1,9 @@
 //= require Main
 
 /*
-Generally you do not need to edit this file. You can start writing
-your code in the provided "Main" class.
-*/
+ Generally you do not need to edit this file. You can start writing
+ your code in the provided "Main" class.
+ */
 
 // Needed for the dizmo menu to work
 function showBack() {
@@ -17,6 +17,17 @@ function showFront() {
 
 // Helper object to attach all the events to
 var events = {};
+var val, fcolor;
+
+var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
+    val = val;
+    console.log(val);
+    if (val ===undefined){
+        fcolor = '#ededed';
+    }  else{
+        fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+    }
+});
 
 // As soon as the dom is loaded, and the dizmo is ready, instantiate the main class
 window.document.addEventListener('dizmoready', function() {
@@ -29,17 +40,17 @@ window.document.addEventListener('dizmoready', function() {
  */
 
 var chart = function( s ) {
-    var bar_w, barcolor, maxval, minval, framecolor, value,
-        target_diff_w, value, targetaccuracy_diff;
+    var bar_w, barcolor, maxval, minval,
+        target_diff_w, targetaccuracy_diff;
 
     var canv_w = 300;
     var canv_h = 80;
     var bar_h = 70;
 
     if (Gauge.Dizmo.load('maxval')=== undefined){
-       maxval = 100;
+        maxval = 100;
     }else{
-     maxval = Gauge.Dizmo.load('maxval');
+        maxval = Gauge.Dizmo.load('maxval');
     }
 
     if (Gauge.Dizmo.load('minval')=== undefined){
@@ -57,44 +68,35 @@ var chart = function( s ) {
     }  else{
         targetaccuracy_diff = (targetval-((targetaccuracy*targetval)/100) * canv_w/(maxval-minval));
     }
-    console.log('targetaccuracy_diff='+targetaccuracy_diff)
+    console.log('targetaccuracy_diff='+targetaccuracy_diff);
     if (targetaccuracy_diff + target_w >= canv_w){
         target_diff_w = canv_w -target_w +targetaccuracy_diff - 1;
-        console.log('target_diff_w ='+ target_diff_w)
+        console.log('target_diff_w ='+ target_diff_w);
     } else{
         target_diff_w = 2 *  targetaccuracy_diff;
     }
 
-    if (dizmo.publicStorage.getProperty('stdout') ===undefined){
-        framecolor = '#ededed';
-    }  else{
-        framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-    }
+    /* if (dizmo.publicStorage.getProperty('stdout') ===undefined){
+     framecolor = '#ededed';
+     }  else{
+     fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+     }*/
 
 
-/*    var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
-        value = val;
-        console.log(value);
-        if (value ===undefined){
-            framecolor = '#ededed';
-        }  else{
-            framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-        }
-    });*/
+    /*    var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
+     value = val;
+     console.log(value);
+     if (value ===undefined){
+     framecolor = '#ededed';
+     }  else{
+     framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
+     }
+     });*/
 
-    value =  dizmo.publicStorage.getProperty('stdout');
+    //value =  dizmo.publicStorage.getProperty('stdout');
 
-    bar_w = value * canv_w/(maxval-minval);
+    bar_w = val * canv_w/(maxval-minval);
     console.log('bar_w='+ bar_w);
-
-/*    subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
-        value = val;
-        if (value !==undefined){
-            framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-        }  else{
-            framecolor = '#ededed';
-        }
-    });*/
 
     s.setup = function() {
         s.createCanvas(canv_w, canv_h);
@@ -102,10 +104,10 @@ var chart = function( s ) {
     };
 
     s.draw = function() {
-       // img.position(0, 0);
-        s.background(framecolor);
+        // img.position(0, 0);
+        s.background(fcolor);
         s.noStroke();
-        s.fill(255,255,255, 32)
+        s.fill(255,255,255, 32);
         s.rect(0, 9,canv_w, bar_h);
 
         s.noStroke();
