@@ -151,7 +151,15 @@ Class("Gauge.Main", {
                 }
 
                 Gauge.Dizmo.publish('stdout', stdout);
-
+                if (Gauge.Dizmo.load('targetval')=== undefined){
+                    $('.t_label').hide();
+                    $('#target_textfield').hide();
+                    //$('#target_textfield').css('margin-right', 'auto');
+                    //$('#target_textfield').css('margin-left', 'auto');
+                }else{
+                    $('.t_label').show();
+                    $('#target_textfield').show();
+                }
 
 
                 self.subscriptionId = dockedDizmo.publicStorage.subscribeToProperty( 'stdout', function(path, val, oldVal) {
@@ -174,7 +182,15 @@ Class("Gauge.Main", {
                         self.setDynamicBackgroundColor(stdout);
                     }
                     Gauge.Dizmo.publish('stdout', stdout);
-                    //dizmo.publicStorage.subscribeToProperty();
+                    if (Gauge.Dizmo.load('targetval')=== undefined){
+                        $('.t_label').hide();
+                        $('#target_textfield').hide();
+                        //$('#target_textfield').css('margin-right', 'auto');
+                        //$('#target_textfield').css('margin-left', 'auto');
+                    }else{
+                        $('.t_label').show();
+                        $('#target_textfield').show();
+                    }
                 });
             });
 
@@ -186,6 +202,8 @@ Class("Gauge.Main", {
                     dizmo.publicStorage.deleteProperty('stdout');
                     dizmo.setAttribute('settings/framecolor', '#ADC837');
                     jQuery('#display_data').text('0');
+                    $('.t_label').hide();
+                    $('#target_textfield').hide();
                 }
             });
 
