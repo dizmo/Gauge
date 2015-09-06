@@ -85,7 +85,7 @@ var chart = function( s ) {
         }
 
         if (dizmo.publicStorage.getProperty('stdout') ===undefined){
-            fcolor = '#ededed';
+            fcolor = '#ADC837';
         }  else{
             fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
         }
