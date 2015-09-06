@@ -47,57 +47,6 @@ var chart = function( s ) {
     var canv_h = 80;
     var bar_h = 70;
 
-    /*if (Gauge.Dizmo.load('maxval')=== undefined){
-        maxval = 100;
-    }else{
-        maxval = Gauge.Dizmo.load('maxval');
-    }
-
-    if (Gauge.Dizmo.load('minval')=== undefined){
-        minval = 0;
-    }else{
-        minval = Gauge.Dizmo.load('minval');
-    }
-
-    var targetval =  Gauge.Dizmo.load('targetval');
-    var targetaccuracy =  Gauge.Dizmo.load('targetaccuracy');
-    var target_w = targetval * canv_w/(maxval-minval);
-
-    if (targetaccuracy === undefined){
-        targetaccuracy_diff = 0;
-    }  else{
-        targetaccuracy_diff = (targetval-((targetaccuracy*targetval)/100) * canv_w/(maxval-minval));
-    }
-    console.log('targetaccuracy_diff='+targetaccuracy_diff);
-    if (targetaccuracy_diff + target_w >= canv_w){
-        target_diff_w = canv_w -target_w +targetaccuracy_diff - 1;
-        console.log('target_diff_w ='+ target_diff_w);
-    } else{
-        target_diff_w = 2 *  targetaccuracy_diff;
-    }
-
-    if (dizmo.publicStorage.getProperty('stdout') ===undefined){
-        fcolor = '#ededed';
-    }  else{
-        fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-    }*/
-
-
-    /*    var  subscriptionValue = dizmo.publicStorage.subscribeToProperty('stdout', function(path, val, oldVal) {
-     value = val;
-     console.log(value);
-     if (value ===undefined){
-     framecolor = '#ededed';
-     }  else{
-     framecolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-     }
-     });*/
-
-    /*val =  dizmo.publicStorage.getProperty('stdout');
-
-    bar_w = val * canv_w/(maxval-minval);
-    console.log('bar_w='+ bar_w);*/
-
     s.setup = function() {
         s.createCanvas(canv_w, canv_h);
         //img = s.loadImage("assets/shadow.jpg");
