@@ -31,7 +31,7 @@ window.document.addEventListener('dizmoready', function() {
 
 var chart = function( s ) {
     var bar_w, barcolor, maxval, minval, val, fcolor,
-        target_diff_w, targetrange_diff, targetrange_start, targetrange_w;
+        range_w, targetrange_diff, targetrange_start, targetrange_w;
 
     var canv_w = 300;
     var canv_h = 80;
@@ -85,7 +85,7 @@ var chart = function( s ) {
         //console.log('bar_w='+ bar_w);
 
         if (targetrange === undefined){
-            range = 0;
+            range_w = 0;
         }  else{
             targetrange_start = (targetval - targetrange) * canv_w/(maxval-minval);
                console.log('targetval, targetrange = '+(targetval) +' '+targetrange);
