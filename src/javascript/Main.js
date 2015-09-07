@@ -373,7 +373,7 @@ Class("Gauge.Main", {
             var totalMissColor = '#EF3B45';
             var frame_color;
 
-            if(targetval === value){
+            if(targetval == value){
                 frame_color = onTargetColor;
             } else if ((targetval+targetrange) > value && (targetval-targetrange)< value ){
                 frame_color = missedColor;
