@@ -248,6 +248,7 @@ Class("Gauge.Dizmo", {
 
             // Allow the resizing of the dizmo
             dizmo.setAttribute('settings/usercontrols/allowresize', false);
+            dizmo.setAttribute('settings/framecolor', '#ADC837');
         }
     }
 });
