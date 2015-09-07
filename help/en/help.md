@@ -19,11 +19,13 @@ Dock Gauge to another dizmo to display its output as a numerical value. You can 
 ### What is new in V0.3
 
 * Add help.
-* Add change framecolor, docking.
+* Add indicator bar, change framecolor, docking.
 
 ## Works well with
 
-* Stock Price
+* Calculator
+* Sticky Notes
+* Weather
 
 ## Additional information
 
