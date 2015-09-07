@@ -69,7 +69,7 @@ var chart = function( s ) {
 
         var targetval =  Gauge.Dizmo.load('targetval');
         var targetrange =  Gauge.Dizmo.load('targetrange');
-        console.log('targetrange='+targetrange);
+        //console.log('targetrange='+targetrange);
         var target_w = targetval * canv_w/(maxval-minval);
 
 
@@ -88,15 +88,14 @@ var chart = function( s ) {
             range_w = 0;
         }  else{
             targetrange_start = (targetval - targetrange) * canv_w/(maxval-minval);
-               console.log('targetval, targetrange = '+(targetval) +' '+targetrange);
-               console.log('targetrange_diff = '+(targetrange_diff));
+               //console.log('targetval, targetrange = '+(targetval) +' '+targetrange);
+               //console.log('targetrange_diff = '+(targetrange_diff));
                range_w = 2* targetrange * canv_w/(maxval-minval);
         }
 
 
         if ((range_w/2) + target_w < canv_w){
             targetrange_w = range_w;
-            console.log('targetrange_w ='+ targetrange_w);
         } else{
             //targetrange_w = (targetval+(2*targetrange)-maxval)* canv_w/(maxval-minval);
             targetrange_w = canv_w -target_w + (range_w/2) - 1;

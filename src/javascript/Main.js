@@ -65,8 +65,8 @@ Class("Gauge.Main", {
             if (Gauge.Dizmo.load('targetval')=== undefined){
                 $('.t_label').hide();
                 $('#target_textfield').hide();
-                //$('#target_textfield').css('margin-right', 'auto');
-                //$('#target_textfield').css('margin-left', 'auto');
+                $('#display-unit').css('margin-right', 'auto');
+                $('#display-unit').css('margin-left', 'auto');
             }else{
                 $('.t_label').show();
                 $('#target_textfield').show();
@@ -218,7 +218,8 @@ Class("Gauge.Main", {
                 Gauge.Dizmo.save('unit', unit);
             }
             jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
-
+            jQuery('#t_label').css('margin-left', '65');
+            jQuery('#target_textfield').css('margin-right', '10');
         },
 
         setMaxval: function(maxval){

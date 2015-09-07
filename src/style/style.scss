@@ -44,19 +44,19 @@ body {
     width: 300px;
     margin-left: 10px;
     margin-right: 10px;
-    //margin-top: 16px;
+    margin-top: 16px;
     margin-bottom: 2px;
   }
   #display_unit {
     display: inline-block;
-    margin-top: 16px;
+    margin-left: 0px;
     color: #ffffff;
   }
   #target .t_label{
     display: inline-block;
-    margin-top: 16px !important;
+    //margin-top: 16px !important;
     margin-right: 10px;
-    margin-left: 100px;
+    margin-left: 102px;
     color: #ffffff !important;
   }
 
@@ -67,7 +67,7 @@ body {
     border: 1px solid white;
     text-align: right;
     color: white !important;
-    margin-top: 16px !important;
+    //margin-top: 16px !important;
     margin-right: -10px !important;
   }
   #chart{
