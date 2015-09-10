@@ -4,8 +4,9 @@
 
 1. Screenshots
 2. Description
-3. Works well with
-4. Additional information
+3. What is new in V0.3.x
+4. Works well with
+5. Additional information
 
 ## Screenshots
 
@@ -16,7 +17,13 @@
 
 Dock Gauge to another dizmo to display its output as a numerical value. You can set a maximum and a mininum at the back so that if the value of the docked dizmo approaches one of these thresholds, Gauge changes its color accordingly.
 
-### What is new in V0.3
+## What is new in V0.3.x
+
+* Edit help.
+* Add screenshots.
+* Add preview.
+
+### V0.3
 
 * Add help.
 * Add indicator bar, change framecolor, docking.
