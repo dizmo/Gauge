@@ -53,16 +53,16 @@ Class("Gauge.Main", {
         initialize: function() {
             var self = this;
             jQuery('#unit_inputfield').val(Gauge.Dizmo.load('unit'));
-            jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
+            //jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
             jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
-            jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
+            //jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
             jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
-            jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
+            //jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
             jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
             jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
             jQuery('#target_range_inputfield').val(Gauge.Dizmo.load('targetrange'));
 
-            if (Gauge.Dizmo.load('targetval')=== undefined){
+            if (!Gauge.Dizmo.load('targetval')) {
                 $('.t_label').hide();
                 $('#target_textfield').hide();
                 $('#display-unit').css('margin-right', 'auto');
@@ -151,7 +151,7 @@ Class("Gauge.Main", {
                 }
 
                 Gauge.Dizmo.publish('stdout', stdout);
-                if (Gauge.Dizmo.load('targetval')=== undefined){
+                if (!Gauge.Dizmo.load('targetval')){
                     $('.t_label').hide();
                     $('#target_textfield').hide();
                     $('#display-unit').css('margin-right', 'auto');
@@ -182,7 +182,7 @@ Class("Gauge.Main", {
                         self.setDynamicBackgroundColor(stdout);
                     }
                     Gauge.Dizmo.publish('stdout', stdout);
-                    if (Gauge.Dizmo.load('targetval')=== undefined){
+                    if (!Gauge.Dizmo.load('targetval')){
                         $('.t_label').hide();
                         $('#target_textfield').hide();
                         $('#display-unit').css('margin-right', 'auto');
