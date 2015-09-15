@@ -65,14 +65,10 @@ var chart = function( s ) {
 
         val =  dizmo.publicStorage.getProperty('stdout');
 
-        bar_w = val * canv_w/(maxval-minval);
-
         var targetval =  Gauge.Dizmo.load('targetval');
         var targetrange =  Gauge.Dizmo.load('targetrange');
         //console.log('targetrange='+targetrange);
         var target_w = targetval * canv_w/(maxval-minval);
-
-        val =  dizmo.publicStorage.getProperty('stdout');
 
         bar_w = val * canv_w/(maxval-minval);
         //console.log('bar_w='+ bar_w);
