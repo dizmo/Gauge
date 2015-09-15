@@ -52,12 +52,29 @@ Class("Gauge.Main", {
     after: {
         initialize: function() {
             var self = this;
-            jQuery('#unit_inputfield').val(Gauge.Dizmo.load('unit'));
-            //jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
-            jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
-            //jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
-            jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
-            //jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
+
+            if (!Gauge.Dizmo.load('unit')){
+                $('#display_unit').hide();
+            } else{
+                jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
+            }
+
+            if (!Gauge.Dizmo.load('maxval')){
+                jQuery('#display_maxval').text(100);
+            }else{
+                jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
+                jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
+            }
+
+            if (!Gauge.Dizmo.load('minval')){
+                jQuery('#display_minval').text(0);
+            }else{
+                jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
+                jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
+            }
+
+
+
             jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
             jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
             jQuery('#target_range_inputfield').val(Gauge.Dizmo.load('targetrange'));
@@ -71,6 +88,10 @@ Class("Gauge.Main", {
                 $('.t_label').show();
                 $('#target_textfield').show();
             }
+
+
+
+            jQuery('#unit_inputfield').val(Gauge.Dizmo.load('unit'));
 
             self.initEvents();
         }
@@ -204,6 +225,19 @@ Class("Gauge.Main", {
                     jQuery('#display_data').text('0');
                     $('.t_label').hide();
                     $('#target_textfield').hide();
+                    jQuery('#display_maxval').text(100);
+                    dizmo.privateStorage.deleteProperty("maxval");
+                    jQuery('#maximum_value_inputfield').val("");
+                    jQuery('#display_minval').text(0);
+                    dizmo.privateStorage.deleteProperty("minval");
+                    jQuery('#minimum_value_inputfield').val("");
+                    dizmo.privateStorage.deleteProperty("unit");
+                    jQuery('#unit_inputfield').val("");
+                    jQuery('#display_unit').text("");
+                    dizmo.privateStorage.deleteProperty("targetval");
+                    jQuery('#target_value_inputfield').val("");
+                    dizmo.privateStorage.deleteProperty("targetrange");
+                    jQuery('#target_range_inputfield').val("");
                 }
             });
 
