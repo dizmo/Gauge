@@ -45,19 +45,19 @@ var chart = function( s ) {
     s.draw = function() {
         // img.position(0, 0);
 
-        if (Gauge.Dizmo.load('maxval')=== undefined){
+        if (!Gauge.Dizmo.load('maxval')){
             maxval = 100;
         }else{
             maxval = Gauge.Dizmo.load('maxval');
         }
 
-        if (Gauge.Dizmo.load('minval')=== undefined){
+        if (!Gauge.Dizmo.load('minval')){
             minval = 0;
         }else{
             minval = Gauge.Dizmo.load('minval');
         }
 
-        if (dizmo.publicStorage.getProperty('stdout') ===undefined){
+        if (!dizmo.publicStorage.getProperty('stdout')){
             fcolor = '#ADC837';
         }  else{
             fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
@@ -72,19 +72,12 @@ var chart = function( s ) {
         //console.log('targetrange='+targetrange);
         var target_w = targetval * canv_w/(maxval-minval);
 
-
-        if (dizmo.publicStorage.getProperty('stdout') ===undefined){
-            fcolor = '#ADC837';
-        }  else{
-            fcolor = dizmo.publicStorage.getProperty('stdout/framecolor');
-        }
-
         val =  dizmo.publicStorage.getProperty('stdout');
 
         bar_w = val * canv_w/(maxval-minval);
         //console.log('bar_w='+ bar_w);
 
-        if (targetrange === undefined){
+        if (!targetrange){
             range_w = 0;
         }  else{
             targetrange_start = (targetval - targetrange) * canv_w/(maxval-minval);
@@ -110,7 +103,7 @@ var chart = function( s ) {
         s.fill(255, 255, 255, 127);
         s.rect(0, 9,bar_w, bar_h);
 
-        if (val !== undefined){
+        if (val){
             if (typeof(targetval) ===  'number' && typeof(targetrange) === 'number'){
                 s.stroke('#fff');
                 s.noFill();
