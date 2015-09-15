@@ -321,7 +321,7 @@ Class("Gauge.Main", {
 
             var maxval;
 
-            if (Gauge.Dizmo.load('maxval') === undefined){
+            if (!Gauge.Dizmo.load('maxval')){
                 maxval = 100;
 
             }
@@ -332,7 +332,7 @@ Class("Gauge.Main", {
 
             var minval;
 
-            if (Gauge.Dizmo.load('minval') === undefined){
+            if (!Gauge.Dizmo.load('minval')){
                 minval = 0;
 
             }
@@ -396,7 +396,7 @@ Class("Gauge.Main", {
             var self = this;
             var maxval;
 
-            if (Gauge.Dizmo.load('maxval') === undefined){
+            if (!Gauge.Dizmo.load('maxval')){
                 maxval = 100;
                 return maxval;
             }
@@ -410,8 +410,8 @@ Class("Gauge.Main", {
             var self = this;
             var minval;
 
-            if (Gauge.Dizmo.load('minval') === undefined){
-                minval = 100;
+            if (!Gauge.Dizmo.load('minval')){
+                minval = 0;
                 return minval;
             }
             else{
