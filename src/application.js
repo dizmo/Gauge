@@ -108,6 +108,9 @@ var chart = function( s ) {
         }
 
     };
+    if (!Gauge.Dizmo.load('drawloop'))  {
+        s.noLoop();
+    }
 };
 
 var chart = new p5(chart, 'chart');

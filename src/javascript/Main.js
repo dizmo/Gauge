@@ -157,6 +157,7 @@ Class("Gauge.Main", {
                 self.syncValueText(stdout);
                 var range= Gauge.Dizmo.load('targetrange') ;
                 var t_val= Gauge.Dizmo.load('targetval') ;
+                Gauge.Dizmo.save('drawloop', 'loop');
 
                 if (typeof(t_val)==='number'){
                     if  (range===0) {
@@ -238,6 +239,7 @@ Class("Gauge.Main", {
                     jQuery('#target_value_inputfield').val("");
                     dizmo.privateStorage.deleteProperty("targetrange");
                     jQuery('#target_range_inputfield').val("");
+                    dizmo.privateStorate.deleteProperty('drawloop');
                 }
             });
 
