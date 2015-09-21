@@ -108,6 +108,8 @@ Class("Gauge.Main", {
                     self.setUnit(unitval);
                 } else {
                     dizmo.privateStorage.deleteProperty("unit");
+                    jQuery('#unit_inputfield').val("");
+                    jQuery('#display_unit').text("");
                 }
 
                 var maxval = jQuery('.maximum_value input').val();
@@ -115,6 +117,7 @@ Class("Gauge.Main", {
                     self.setMaxval(maxval);
                 }  else {
                     dizmo.privateStorage.deleteProperty("maxval");
+                    jQuery('#maximum_value_inputfield').val("");
                 }
 
                 var minval = jQuery('.minimum_value input').val();
@@ -122,6 +125,7 @@ Class("Gauge.Main", {
                     self.setMinval(minval);
                 }  else {
                     dizmo.privateStorage.deleteProperty("minval");
+                    jQuery('#minimum_value_inputfield').val("");
                 }
 
                 var targetval = jQuery('.target_value input').val();
@@ -129,6 +133,8 @@ Class("Gauge.Main", {
                     self.setTargetval(targetval);
                 }  else {
                     dizmo.privateStorage.deleteProperty("targetval");
+                    jQuery('#target_value_inputfield').val("");
+
                 }
 
                 //var targetaccuracy = DizmoElements('.accuracy-select').val();
@@ -137,6 +143,8 @@ Class("Gauge.Main", {
                     self.setRange(targetrange);
                 }else {
                     dizmo.privateStorage.deleteProperty("targetrange");
+                    jQuery('#target_range_inputfield').val("");
+
                 }
 
 
@@ -161,14 +169,14 @@ Class("Gauge.Main", {
 
                 if (typeof(t_val)==='number'){
                     if  (range===0) {
-                        console.log('lost');
+                        //console.log('dyn');
                         self.setDynamicBackgroundColor(stdout);
                     }  else {
-                        console.log('found');
+                        //console.log('stat');
                         self.setTargetRangeBackgroundColor(t_val, range, stdout);
                     }
                 }else {
-                    console.log('lost') ;
+                    //console.log('dyn') ;
                     self.setDynamicBackgroundColor(stdout);
                 }
 
@@ -193,14 +201,14 @@ Class("Gauge.Main", {
 
                     if (typeof(t_val)==='number'){
                         if  (range===0) {
-                            console.log('lost');
+                            //console.log('dyn');
                             self.setDynamicBackgroundColor(stdout);
                         }  else {
-                            console.log('found');
+                            //console.log('stat');
                             self.setTargetRangeBackgroundColor(t_val, range, stdout);
                         }
                     }else {
-                        console.log('lost') ;
+                        //console.log('dyn') ;
                         self.setDynamicBackgroundColor(stdout);
                     }
                     Gauge.Dizmo.publish('stdout', stdout);
@@ -226,20 +234,12 @@ Class("Gauge.Main", {
                     jQuery('#display_data').text('0');
                     $('.t_label').hide();
                     $('#target_textfield').hide();
-                    jQuery('#display_maxval').text(100);
-                    dizmo.privateStorage.deleteProperty("maxval");
-                    jQuery('#maximum_value_inputfield').val("");
-                    jQuery('#display_minval').text(0);
-                    dizmo.privateStorage.deleteProperty("minval");
-                    jQuery('#minimum_value_inputfield').val("");
-                    dizmo.privateStorage.deleteProperty("unit");
-                    jQuery('#unit_inputfield').val("");
-                    jQuery('#display_unit').text("");
-                    dizmo.privateStorage.deleteProperty("targetval");
-                    jQuery('#target_value_inputfield').val("");
-                    dizmo.privateStorage.deleteProperty("targetrange");
-                    jQuery('#target_range_inputfield').val("");
-                    dizmo.privateStorate.deleteProperty('drawloop');
+                    try{
+                        dizmo.privateStorage.deleteProperty('drawloop');
+                    }catch (ex){
+                        console.error(ex);
+                    }
+
                 }
             });
 
