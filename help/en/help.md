@@ -10,12 +10,12 @@
 
 ## Screenshots
 
-![Gauge displays the output of a docked dizmo as a numerical value.](./DockedGauge.jpg)
-![Gauge settings](./GaugeBack.jpg)
+![Gauge displays the output of a docked dizmo as a numerical value.](./DockedGauge.png)
+![Gauge settings](./GaugeBack.png)
 
 ## Description
 
-Dock Gauge to another dizmo to display its output as a numerical value. You can set a maximum and a mininum at the back so that if the value of the docked dizmo approaches one of these thresholds, Gauge changes its color accordingly.
+Dock Gauge to another dizmo to display its output as a numerical value. You can set a maximum and a mininum, target value and range at the back so that if the value of the docked dizmo approaches one of these thresholds, Gauge changes its color accordingly.
 
 ## What is new in V0.3.x
 
