@@ -1,13 +1,5 @@
 # Gauge
 
-**Table of contents**
-
-1. Screenshots
-2. Description
-3. What is new in V0.3.x
-4. Works well with
-5. Additional information
-
 ## Screenshots
 
 ![Gauge displays the output of a docked dizmo as a numerical value.](./DockedGauge.png)
