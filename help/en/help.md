@@ -28,6 +28,6 @@ Dock Gauge to another dizmo to display its output as a numerical value. You can 
 
 ## Additional information
 
-Developer: dizmo AG
-Contact: support@dizmo.com
-Website: [www.dizmo.com](https.www.dizmo.com)
+Developer: dizmo AG<br>
+Contact: support@dizmo.com<br>
+Website: [www.dizmo.com](https.www.dizmo.com)<br>
