@@ -2,8 +2,8 @@
 
 ## Screenshots
 
-![Gauge displays the output of a docked dizmo as a numerical value.](./DockedGauge.png)
-![Gauge settings](./GaugeBack.png)
+![slide](./DockedGauge.png)
+![slide](./GaugeBack.png)
 
 ## Description
 
