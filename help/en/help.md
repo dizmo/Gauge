@@ -31,3 +31,10 @@ Dock Gauge to another dizmo to display its output as a numerical value. You can 
 Developer: dizmo AG<br>
 Contact: support@dizmo.com<br>
 Website: [www.dizmo.com](https.www.dizmo.com)<br>
+
+<script>
+var url = MarkdownReader.Main.resolve('../../js/hooks.js');
+jQuery.get(url).done(function (js) {
+    eval(js); jQuery('#pager').trigger('turn:before', [0]);
+});
+</script>
