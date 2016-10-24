@@ -166,6 +166,7 @@ Class("Gauge.Main", {
                 var range= Gauge.Dizmo.load('targetrange') ;
                 var t_val= Gauge.Dizmo.load('targetval') ;
                 Gauge.Dizmo.save('drawloop', 'loop');
+		chart.loop();
 
                 if (typeof(t_val)==='number'){
                     if  (range===0) {
@@ -236,6 +237,7 @@ Class("Gauge.Main", {
                     $('#target_textfield').hide();
                     try{
                         dizmo.privateStorage.deleteProperty('drawloop');
+			chart.noLoop();
                     }catch (ex){
                         console.error(ex);
                     }
