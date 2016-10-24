@@ -189,7 +189,7 @@ Class("Gauge.Dizmo", {
             });
 
             dizmo.onShowFront(function() {
-                Gauge.Dizmo.setSize(320,230);
+                Gauge.Dizmo.setSize(320,250);
                 jQuery("#back").hide();
                 jQuery("#front").show();
                 jQuery(events).trigger('dizmo.turned', ['front']);
