@@ -33,7 +33,7 @@ Contact: support@dizmo.com<br>
 Website: [www.dizmo.com](https.www.dizmo.com)<br>
 
 <script>
-var url = MarkdownReader.Main.resolve('../../js/hooks.js');
+var url="/bundles/com.dizmo.helper/assets/js/hooks.js";
 jQuery.get(url).done(function (js) {
     eval(js); jQuery('#pager').trigger('turn:before', [0]);
 });
