@@ -7,9 +7,9 @@
 
 ## Description
 
-Dock the Gauge dizmo to another dizmo to display its output as a numerical value. You can set a maximum and a mininum, target value, and range at the back of the Gauge dizmo so that if the value of the docked dizmo approaches one of these thresholds, the Gauge dizmo changes its color accordingly.
+Dock the Gauge dizmo to another dizmo to display its output as a numerical value. You can set a maximum and a minimum, target value, and range at the back of the Gauge dizmo so that if the value of the docked dizmo approaches one of these thresholds, the Gauge dizmo changes its color accordingly.
 
-## What is new in V1.0.0
+## What is new in V1.1.0
 
 * Edit help.
 * Add screenshots.

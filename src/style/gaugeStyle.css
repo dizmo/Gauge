@@ -1,0 +1,15 @@
+#display_unit{
+  width: calc(100% / 2 - 30px);
+  line-height: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.targetInput{
+  float: right;
+  color: #fff;
+  line-height: 30px;
+}
+#front #target #target_textfield{
+  margin-right: 0!important;
+}
