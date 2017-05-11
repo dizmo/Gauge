@@ -270,8 +270,6 @@ Class("Gauge.Main", {
     } //isDizmoSharingLive ends here
 
     dizmo.privateStorage.subscribeToProperty('maxval', function(path, newVal, oldval) {
-      console.log('%c|--maxval udpated=>', 'color:orange');
-      console.log('newVal', newVal);
       if(isDizmoSharingLive()){
         jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
         jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
@@ -279,8 +277,6 @@ Class("Gauge.Main", {
     });
 
     dizmo.privateStorage.subscribeToProperty('minval', function(path, newVal, oldval) {
-      console.log('%c|--minval udpated=>', 'color:orange');
-      console.log('newVal', newVal);
       if(isDizmoSharingLive()){
         jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
         jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
@@ -288,8 +284,6 @@ Class("Gauge.Main", {
     });
 
     dizmo.privateStorage.subscribeToProperty('unit', function(path, newVal, oldval) {
-      console.log('%c|--unit udpated=>', 'color:orange');
-      console.log('newVal', newVal);
       if(isDizmoSharingLive()){
         jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
         jQuery('#unit_inputfield').val(Gauge.Dizmo.load('unit'));
@@ -297,8 +291,6 @@ Class("Gauge.Main", {
     });
 
     dizmo.privateStorage.subscribeToProperty('targetval', function(path, newVal, oldval) {
-      console.log('%c|--targetval udpated=>', 'color:orange');
-      console.log('newVal', newVal);
       if(isDizmoSharingLive()){
         jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
         jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
@@ -306,8 +298,6 @@ Class("Gauge.Main", {
     });
 
     dizmo.privateStorage.subscribeToProperty('targetrange', function(path, newVal, oldval) {
-      console.log('%c|--targetrange udpated=>', 'color:orange');
-      console.log('newVal', newVal);
       if(isDizmoSharingLive()){
         jQuery('#target_range_inputfield').val(Gauge.Dizmo.load('targetrange'));
       }
@@ -454,10 +444,10 @@ Class("Gauge.Main", {
     }
 
     Gauge.Dizmo.publish('stdout/framecolor', frame_color);
-    console.log('frame_color ='+ frame_color);
+    // console.log('frame_color ='+ frame_color);
     var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60);
     jQuery('#target_textfield').css('background', Gauge.ColorMixer.lightenColor(frame_color, -60));
-    console.log('target_textfield_background ='+ target_textfield_background);
+    // console.log('target_textfield_background ='+ target_textfield_background);
   },
 
   setTargetRangeBackgroundColor: function(targetval, targetrange, value){
@@ -483,7 +473,7 @@ Class("Gauge.Main", {
     Gauge.Dizmo.publish('stdout/framecolor', frame_color);
     var target_textfield_background = Gauge.ColorMixer.lightenColor(frame_color, -60);
     jQuery('#target_textfield').css('background', Gauge.ColorMixer.lightenColor(frame_color, -60));
-    console.log('target_textfield_background ='+ target_textfield_background);
+    // console.log('target_textfield_background ='+ target_textfield_background);
   },
 
   setMax: function(){
