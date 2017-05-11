@@ -109,16 +109,25 @@ Class("Gauge.Main", {
         }
 
         var maxval = jQuery('.maximum_value input').val();
+        var minval = jQuery('.minimum_value input').val();
         if (maxval !== '') {
-          self.setMaxval(maxval);
+          minval = minval !== ''?minval:0;
+          if(parseInt(minval) < parseInt(maxval)){
+            self.setMaxval(maxval);
+          }else{
+            self.showDialog('Max value can not be less then min val','Error!','maximum_value');
+          }
         }  else {
           dizmo.privateStorage.deleteProperty("maxval");
           jQuery('#maximum_value_inputfield').val("");
         }
 
-        var minval = jQuery('.minimum_value input').val();
         if (minval !== '') {
-          self.setMinval(minval);
+          if(parseInt(jQuery('.maximum_value input').val()) > parseInt(minval)){
+            self.setMinval(minval);
+          }else{
+            self.showDialog('Min value can not be greater then max val','Error!','minimum_value');
+          }
         }  else {
           dizmo.privateStorage.deleteProperty("minval");
           jQuery('#minimum_value_inputfield').val("");
@@ -126,17 +135,24 @@ Class("Gauge.Main", {
 
         var targetval = jQuery('.target_value input').val();
         if (targetval !== '') {
-          self.setTargetval(targetval);
+          if(parseInt(targetval) > parseInt(minval) && parseInt(targetval) < parseInt(maxval)){
+            self.setTargetval(targetval);
+          }else{
+            self.showDialog('Target val should be in between max val and min val','Error!','target_value');
+          }
         }  else {
           dizmo.privateStorage.deleteProperty("targetval");
           jQuery('#target_value_inputfield').val("");
-
         }
 
         //var targetaccuracy = DizmoElements('.accuracy-select').val();
         var targetrange = jQuery('.target_range input').val();
         if (targetrange !== '') {
-          self.setRange(targetrange);
+          if(parseInt(targetrange) <= parseInt(targetval)){
+            self.setRange(targetrange);
+          }else{
+            self.showDialog('Target range should be less then target val','Error!','target_range');
+          }
         }else {
           dizmo.privateStorage.deleteProperty("targetrange");
           jQuery('#target_range_inputfield').val("");
@@ -238,6 +254,62 @@ Class("Gauge.Main", {
         }catch (ex){
           console.error(ex);
         }
+      }
+    });
+
+
+    //dizmoLive DD-2366
+    function isDizmoSharingLive() {
+      var remoteHostId = dizmo.getAttribute('connection/remoteHostId');
+      var direction = dizmo.getAttribute('connection/direction');
+      if(remoteHostId && direction){
+        return true;
+      }else {
+        return false;
+      }
+    } //isDizmoSharingLive ends here
+
+    dizmo.privateStorage.subscribeToProperty('maxval', function(path, newVal, oldval) {
+      console.log('%c|--maxval udpated=>', 'color:orange');
+      console.log('newVal', newVal);
+      if(isDizmoSharingLive()){
+        jQuery('#display_maxval').text(Gauge.Dizmo.load('maxval'));
+        jQuery('#maximum_value_inputfield').val(Gauge.Dizmo.load('maxval'));
+      }
+    });
+
+    dizmo.privateStorage.subscribeToProperty('minval', function(path, newVal, oldval) {
+      console.log('%c|--minval udpated=>', 'color:orange');
+      console.log('newVal', newVal);
+      if(isDizmoSharingLive()){
+        jQuery('#display_minval').text(Gauge.Dizmo.load('minval'));
+        jQuery('#minimum_value_inputfield').val(Gauge.Dizmo.load('minval'));
+      }
+    });
+
+    dizmo.privateStorage.subscribeToProperty('unit', function(path, newVal, oldval) {
+      console.log('%c|--unit udpated=>', 'color:orange');
+      console.log('newVal', newVal);
+      if(isDizmoSharingLive()){
+        jQuery('#display_unit').text(Gauge.Dizmo.load('unit'));
+        jQuery('#unit_inputfield').val(Gauge.Dizmo.load('unit'));
+      }
+    });
+
+    dizmo.privateStorage.subscribeToProperty('targetval', function(path, newVal, oldval) {
+      console.log('%c|--targetval udpated=>', 'color:orange');
+      console.log('newVal', newVal);
+      if(isDizmoSharingLive()){
+        jQuery('#target_textfield').val(Gauge.Dizmo.load('targetval'));
+        jQuery('#target_value_inputfield').val(Gauge.Dizmo.load('targetval'));
+      }
+    });
+
+    dizmo.privateStorage.subscribeToProperty('targetrange', function(path, newVal, oldval) {
+      console.log('%c|--targetrange udpated=>', 'color:orange');
+      console.log('newVal', newVal);
+      if(isDizmoSharingLive()){
+        jQuery('#target_range_inputfield').val(Gauge.Dizmo.load('targetrange'));
       }
     });
   },
@@ -447,6 +519,18 @@ Class("Gauge.Main", {
     self.syncValueText(stdout);
     self.setBackgroundColor(stdout);
     Gauge.Dizmo.publish('stdout', stdout);
-  }
+  },
+
+  showDialog: function(message, title, focusDivId) {
+    DizmoElements('#frontInfoDialog').dnotify('info', {
+      text: message,
+      title: title,
+      ok: function() {
+        Gauge.Dizmo.showBack();
+        jQuery('.'+focusDivId +' input').focus();
+      } //ok function ends here
+    });
+  } //showDialog ends here
+
 }
 });
