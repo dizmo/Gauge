@@ -1,0 +1,16 @@
+{
+    "extends": "eslint:recommended",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "bundle": false,
+        "dizmo": false,
+        "i18n": false,
+        "showBack": false,
+        "showFront": false,
+        "viewer": false,
+        "DizmoElements": false
+    }
+}

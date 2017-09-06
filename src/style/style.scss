@@ -1,6 +1,12 @@
-body {
-  margin: 0px;
-  padding: 0px;
+.no-dizmo-drag {
+  -webkit-dashboard-region: dashboard-region(control rectangle);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 #front {
@@ -191,3 +197,36 @@ body {
     }
   }
 }
+
+
+// #front {
+//   height: 100%;
+//   width: 100%;
+//   div.table {
+//     display: table;
+//     height: 100%;
+//     width: 100%;
+//     div.table-cell {
+//       display: table-cell;
+//       font-size: 3em;
+//       font-weight: bold;
+//       text-align: center;
+//       vertical-align: middle;
+//     }
+//   }
+// }
+//
+// #back {
+//   height: 100%;
+//   width: 100%;
+//   div.footer {
+//     bottom: 10px;
+//     left: 0;
+//     position: absolute;
+//     text-align: center;
+//     width: 100%;
+//     button#done {
+//       line-height: 26px;
+//     }
+//   }
+// }
